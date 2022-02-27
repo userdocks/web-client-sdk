@@ -1,0 +1,10 @@
+.github
+coverage
+test
+src
+.eslintrc.js
+.gitignore
+.prettierrc
+.globals.d.ts
+jest.config.js
+tsconfig.json
