@@ -27,7 +27,7 @@ export const receiveMessage = (
       token,
     };
 
-    if (isAllowed) {
+    if (token) {
       window.removeEventListener('message', e =>
         receiveMessage(e, iframe, options, resolve)
       );
@@ -35,9 +35,7 @@ export const receiveMessage = (
 
       return resolve(data);
     }
-
-    return (window.location.href = `${loginUri}?client_id=${audience}&state=${state}&type=signIn&redirect_uri=${redirectUri}`);
+    return;
   }
-
-  return '';
+  return;
 };
