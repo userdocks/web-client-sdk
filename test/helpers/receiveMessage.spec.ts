@@ -59,10 +59,12 @@ describe('receiveMessage', () => {
     );
 
     // is actually setting the window.location.href to redirect instantly
-    expect(data).toBe(
-      'https://login.userdocks.com?client_id=f0af4569-4d5d-4c20-af95-5a80c74e30a6&state=30e9651e-3e4d-4a67-94bc-b35edb9924be&type=signIn&redirect_uri=https://app.userdocks.com'
-    );
-    expect(global.window.removeEventListener).toBeCalledTimes(0);
+    expect(data).toEqual({
+      success: false,
+      loginUri:
+        'https://login.userdocks.com?client_id=f0af4569-4d5d-4c20-af95-5a80c74e30a6&state=30e9651e-3e4d-4a67-94bc-b35edb9924be&type=signIn&redirect_uri=https://app.userdocks.com',
+      token: defaultToken,
+    });
 
     // cleanup
     global.window = originalWindow;
@@ -85,8 +87,7 @@ describe('receiveMessage', () => {
     // @ts-ignore
     const data = receiveMessage({} as MessageEvent, iframe, config, val => val);
 
-    // is actually setting the window.location.href to redirect instantly
-    expect(data).toBe('');
+    expect(data).toBe(undefined);
     expect(global.window.removeEventListener).toBeCalledTimes(0);
 
     // cleanup
