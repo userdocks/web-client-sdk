@@ -14,6 +14,7 @@ describe('receiveMessage', () => {
     const data = receiveMessage(
       {
         data: JSON.stringify({
+          originator: 'userdocks',
           token,
         }),
       } as MessageEvent,
@@ -24,6 +25,7 @@ describe('receiveMessage', () => {
     );
 
     expect(data).toEqual({
+      originator: 'userdocks',
       success: true,
       loginUri:
         'https://login.userdocks.com?client_id=f0af4569-4d5d-4c20-af95-5a80c74e30a6&state=30e9651e-3e4d-4a67-94bc-b35edb9924be&type=signIn&redirect_uri=https://app.userdocks.com',
@@ -50,7 +52,7 @@ describe('receiveMessage', () => {
 
     const data = receiveMessage(
       {
-        data: JSON.stringify({ token: defaultToken }),
+        data: JSON.stringify({ originator: 'userdocks', token: defaultToken }),
       } as MessageEvent,
       iframe,
       config,
@@ -58,8 +60,8 @@ describe('receiveMessage', () => {
       val => val
     );
 
-    // is actually setting the window.location.href to redirect instantly
     expect(data).toEqual({
+      originator: 'userdocks',
       success: false,
       loginUri:
         'https://login.userdocks.com?client_id=f0af4569-4d5d-4c20-af95-5a80c74e30a6&state=30e9651e-3e4d-4a67-94bc-b35edb9924be&type=signIn&redirect_uri=https://app.userdocks.com',

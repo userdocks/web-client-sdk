@@ -31,15 +31,22 @@ export const getUserdocks = async (options?: IOptions) => {
       version = null;
     },
     async exchangeCodeForToken() {
-      const token = await exchangeCodeForToken(options || config);
+      try {
+        const token = await exchangeCodeForToken(options || config);
 
-      if (!!worker) {
-        worker.postMessage(message('setToken', { payload: token }));
-      } else {
-        tokenStoreWithoutWebWorker.setToken(token);
+        if (!!worker) {
+          worker.postMessage(message('setToken', { payload: token }));
+        } else {
+          tokenStoreWithoutWebWorker.setToken(token);
+        }
+
+        return true;
+      } catch (err) {
+        console.error(
+          'A request to echange a code for a token failed. Make sure that all properties of the config object are correct.'
+        );
       }
-
-      return true;
+      return false;
     },
     async getToken() {
       let token = defaultToken;
@@ -70,12 +77,11 @@ export const getUserdocks = async (options?: IOptions) => {
 
         return data.success || false;
       } catch (err) {
-        console.warn(
-          'A silent refresh failed. Make sure that all properties of the config object are correct.'
+        console.error(
+          'A request for a silent refresh failed. Make sure that all properties of the config object are correct.'
         );
-
-        return false;
       }
+      return false;
     },
     redirectTo(redirectType: TRedirectType) {
       return redirectTo(redirectType, options || config);
@@ -92,11 +98,14 @@ export const getUserdocks = async (options?: IOptions) => {
 
         return logoutSuccess;
       } catch (err) {
-        return {
-          success: false,
-          loginUri: '',
-        };
+        console.error(
+          'A request for a logout failed. Make sure that all properties of the config object are correct.'
+        );
       }
+      return {
+        success: false,
+        loginUri: '',
+      };
     },
   };
 };

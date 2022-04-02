@@ -18,6 +18,7 @@ export interface IMessageData {
 }
 
 export interface ISilentRefreshData {
+  originator: 'userdocks';
   isAllowed?: boolean | null;
   success: boolean | null;
   loginUri: string | null;

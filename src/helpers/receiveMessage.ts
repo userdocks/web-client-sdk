@@ -18,16 +18,20 @@ export const receiveMessage = (
 
   if (typeof event?.data === 'string') {
     data = JSON.parse(event?.data || '{}');
-    token = data?.token;
-    isAllowed =
-      (token && token?.expiresIn && token?.expiresIn >= 0) || isAllowed;
-    data = {
-      success: isAllowed,
-      loginUri: `${loginUri}?client_id=${audience}&state=${state}&type=signIn&redirect_uri=${redirectUri}`,
-      token,
-    };
 
-    if (token) {
+    if (data && data?.originator === 'userdocks') {
+      token = data?.token;
+      isAllowed =
+        (token && token.expiresIn && token.expiresIn >= 0) ||
+        data.isAllowed ||
+        isAllowed;
+      data = {
+        originator: data.originator,
+        success: isAllowed,
+        loginUri: `${loginUri}?client_id=${audience}&state=${state}&type=signIn&redirect_uri=${redirectUri}`,
+        token,
+      };
+
       window.removeEventListener('message', e =>
         receiveMessage(e, iframe, options, resolve)
       );

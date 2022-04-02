@@ -13,9 +13,9 @@ export const logout = (options: IOptions): Promise<ILogout> => {
   const prompt = 'none';
 
   const iframe = document.createElement('iframe');
-  iframe.src = `${loginUri}?&redirectUri=${encodeURIComponent(
+  iframe.src = `${loginUri}?&redirect_uri=${encodeURIComponent(
     redirectUri
-  )}&clientId=${clientId}&prompt=${prompt}&logout=true`;
+  )}&client_id=${clientId}&prompt=${prompt}&logout=true`;
   iframe.style.width = '0px';
   iframe.style.height = '0px';
   iframe.style.display = 'none';
