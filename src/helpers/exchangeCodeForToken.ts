@@ -1,5 +1,5 @@
 import { getQueryParams } from './getQueryParams';
-import { IIdTokenPayload, IOptions, IToken, ITokenResponse } from '../types';
+import { IIdTokenPayload, IOptions, IToken } from '../types';
 import lang from './language';
 import { jwtDecode } from './jwtDecode';
 import { defaultToken } from './defaultToken';
@@ -11,7 +11,10 @@ export const exchangeCodeForToken = async (options: IOptions) => {
   const { baseUri, domain, issuer } = getOptions(options);
   const queryParams = getQueryParams();
   const savedNonce = generateUuid();
-  const URL = `${baseUri}/rest/pc/login/oauth/identity/token`;
+  const URL = `${baseUri.replace(
+    /\/$/,
+    ''
+  )}/rest/pc/login/oauth/identity/token`;
   const language = lang();
 
   const {

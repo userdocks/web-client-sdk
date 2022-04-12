@@ -13,11 +13,9 @@ beforeAll(() => {
     new Promise(resolve => {
       resolve({
         json: () =>
-          new Promise(resolve =>
-            resolve({
-              ...token,
-            })
-          ),
+          new Promise(res => {
+            res(token);
+          }),
       });
     })
   );
@@ -33,6 +31,7 @@ describe('exchangeCodeForToken', () => {
 
     expect(data).toEqual(token);
   });
+
   test('with empty config sould use default config and should return a token object', async () => {
     const data = await exchangeCodeForToken({
       authServer: {},
