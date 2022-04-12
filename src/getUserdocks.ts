@@ -14,6 +14,8 @@ import { generateUuid } from './helpers/generateUuid';
 const tokenStoreWithoutWebWorker = getTokenStoreWithoutWebWorker;
 let worker: Worker | null = null;
 let version: string | null = null;
+let globalPromise: Promise<Boolean>;
+let renewPromise = true;
 
 export const getUserdocks = async (options?: IOptions) => {
   if (!version) {
@@ -60,6 +62,32 @@ export const getUserdocks = async (options?: IOptions) => {
       } else {
         token = tokenStoreWithoutWebWorker.getToken();
       }
+
+      if (refresh && token.expiresIn != null && token.expiresIn <= 0) {
+        if (renewPromise) {
+          renewPromise = false;
+
+          globalPromise = new Promise(async resolve => {
+            try {
+              const isSilentRefresh = await silentRefresh(options || config);
+
+              resolve(!!isSilentRefresh.success);
+            } catch {
+              renewPromise = true;
+              resolve(false);
+            }
+          });
+        }
+
+        const result = await globalPromise;
+
+        renewPromise = true;
+
+        if (result) {
+          return await this.getToken();
+        }
+      }
+
       return token;
     },
     async silentRefresh() {

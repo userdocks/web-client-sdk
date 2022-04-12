@@ -111,9 +111,13 @@ Returns a boolean that should resolve a new object.
 
 ```js
 const userdocks = await getUserdocks(options);
-
-const token = await userdocks.getToken();
+const token = await userdocks.getToken(getTokenOptions);
 ```
+
+**Parameters**
+
+- **getTokenOptions** `<object | undefined>`
+  - **refresh** `<boolean>`: If set to true it will automatically refresh the token. Default: `false`
 
 **Return Value**
 
