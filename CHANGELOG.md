@@ -1,3 +1,8 @@
+0.3.0 - April, 12 2022
+
+* a653530 Feat: add auto refresh for getToken (JPeer264)
+* ac878e2 Chore: apply prettier/eslint rules (JPeer264)
+
 0.2.0 - April, 02 2022
 
 * 749518f Feat: add originator to msg and fix login query params (aichbauer)
