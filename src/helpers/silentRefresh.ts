@@ -8,7 +8,7 @@ import { IOptions, ISilentRefreshData } from '../types';
 /* istanbul ignore next */
 export const silentRefresh = async (
   options: IOptions
-): Promise<ISilentRefreshData> => {
+): Promise<ISilentRefreshData | null> => {
   const { redirectUri, loginUri, audience } = getOptions(options);
 
   const grantType = 'refreshToken';
@@ -27,11 +27,16 @@ export const silentRefresh = async (
   iframe.style.display = 'none';
   document.body.appendChild(iframe);
 
-  return new Promise(resolve =>
-    window.addEventListener(
-      'message',
-      e => receiveMessage(e, iframe, options || config, resolve),
-      false
-    )
-  );
+  return Promise.race([
+    new Promise<ISilentRefreshData>(resolve => {
+      window.addEventListener(
+        'message',
+        e => receiveMessage(e, iframe, options || config, resolve),
+        false
+      );
+    }),
+    new Promise<null>(res => {
+      setTimeout(() => res(null), 5000);
+    }),
+  ]);
 };

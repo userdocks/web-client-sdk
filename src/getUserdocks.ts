@@ -21,7 +21,7 @@ export const getUserdocks = async (options?: IOptions) => {
   if (!version) {
     version = generateUuid();
 
-    if (typeof window.Worker !== 'undefined') {
+    if (typeof window !== 'undefined' && typeof window.Worker !== 'undefined') {
       worker = await getWebWorker(options || config);
     }
   }
@@ -67,15 +67,13 @@ export const getUserdocks = async (options?: IOptions) => {
         if (renewPromise) {
           renewPromise = false;
 
-          globalPromise = new Promise(async resolve => {
-            try {
-              const isSilentRefresh = await silentRefresh(options || config);
-
-              resolve(!!isSilentRefresh.success);
-            } catch {
-              renewPromise = true;
-              resolve(false);
-            }
+          globalPromise = new Promise(resolve => {
+            this.silentRefresh()
+              .then(resolve)
+              .catch(() => {
+                renewPromise = true;
+                resolve(false);
+              });
           });
         }
 
@@ -84,7 +82,7 @@ export const getUserdocks = async (options?: IOptions) => {
         renewPromise = true;
 
         if (result) {
-          return await this.getToken();
+          return this.getToken();
         }
       }
 
@@ -93,6 +91,10 @@ export const getUserdocks = async (options?: IOptions) => {
     async silentRefresh() {
       try {
         const data = await silentRefresh(options || config);
+
+        if (!data) {
+          return false;
+        }
 
         if (worker) {
           worker.postMessage(

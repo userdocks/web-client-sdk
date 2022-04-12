@@ -12,10 +12,10 @@ export const getWebWorker = async (options: IOptions) => {
       type: 'text/javascript',
     });
 
-    const globalWorker = window.Worker;
+    const GlobalWorker = window.Worker;
     const workerBlobURL = window.URL.createObjectURL(workerSrcBlob);
 
-    return new globalWorker(workerBlobURL);
+    return new GlobalWorker(workerBlobURL);
   } catch (err) {
     console.warn(
       'A attempt to create a web worker failed. Make sure that the sdkUri in the config is correct.'

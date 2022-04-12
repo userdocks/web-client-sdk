@@ -20,6 +20,7 @@ module.exports = {
     },
   },
   rules: {
+    'import/prefer-default-export': 'off',
     'prettier/prettier': 'error',
     'import/extensions': [
       'error',
