@@ -34,17 +34,17 @@ jest.mock('../../src/helpers/getQueryParams', () => ({
 }));
 jest.mock('../../src/helpers/getQueryParamsByName');
 
-let orginalFetch = global.window.fetch;
+const orginalFetch = global.window.fetch;
 
 const fetchMock = (value: IToken) =>
   new Promise(resolve => {
     resolve({
       json: () =>
-        new Promise(resolve => {
-          return resolve({
+        new Promise(resolve =>
+          resolve({
             ...value,
-          });
-        }),
+          })
+        ),
     });
   });
 

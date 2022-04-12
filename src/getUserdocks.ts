@@ -5,13 +5,13 @@ import { logout } from './helpers/logout';
 import { redirectTo } from './helpers/redirectTo';
 import { silentRefresh } from './helpers/silentRefresh';
 import { getTokenStoreWithoutWebWorker } from './helpers/storeWithoutWebWorker/getTokenStoreWithoutWebWorker';
-import { IOptions, TRedirectType } from './types';
+import { IOptions, IToken, TRedirectType } from './types';
 import { getToken } from './helpers/webWorker/getToken';
 import { getWebWorker } from './helpers/webWorker/getWebWorker';
 import { message } from './helpers/message';
 import { generateUuid } from './helpers/generateUuid';
 
-let tokenStoreWithoutWebWorker = getTokenStoreWithoutWebWorker;
+const tokenStoreWithoutWebWorker = getTokenStoreWithoutWebWorker;
 let worker: Worker | null = null;
 let version: string | null = null;
 
@@ -34,7 +34,7 @@ export const getUserdocks = async (options?: IOptions) => {
       try {
         const token = await exchangeCodeForToken(options || config);
 
-        if (!!worker) {
+        if (worker) {
           worker.postMessage(message('setToken', { payload: token }));
         } else {
           tokenStoreWithoutWebWorker.setToken(token);
@@ -48,10 +48,10 @@ export const getUserdocks = async (options?: IOptions) => {
       }
       return false;
     },
-    async getToken() {
+    async getToken({ refresh }: { refresh?: boolean } = {}): Promise<IToken> {
       let token = defaultToken;
 
-      if (!!worker) {
+      if (worker) {
         const uuid = generateUuid();
 
         worker.postMessage(message('getToken', { payload: { uuid } }));
@@ -60,14 +60,13 @@ export const getUserdocks = async (options?: IOptions) => {
       } else {
         token = tokenStoreWithoutWebWorker.getToken();
       }
-
       return token;
     },
     async silentRefresh() {
       try {
         const data = await silentRefresh(options || config);
 
-        if (!!worker) {
+        if (worker) {
           worker.postMessage(
             message('setToken', { payload: data.token || defaultToken })
           );
@@ -90,7 +89,7 @@ export const getUserdocks = async (options?: IOptions) => {
       try {
         const logoutSuccess = await logout(options || config);
 
-        if (!!worker) {
+        if (worker) {
           worker.postMessage(message('deleteToken'));
         } else {
           tokenStoreWithoutWebWorker.deleteToken();

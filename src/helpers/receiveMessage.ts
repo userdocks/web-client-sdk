@@ -39,7 +39,5 @@ export const receiveMessage = (
 
       return resolve(data);
     }
-    return;
   }
-  return;
 };

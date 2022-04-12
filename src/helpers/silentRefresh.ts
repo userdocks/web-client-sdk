@@ -27,11 +27,11 @@ export const silentRefresh = async (
   iframe.style.display = 'none';
   document.body.appendChild(iframe);
 
-  return new Promise(resolve => {
-    return window.addEventListener(
+  return new Promise(resolve =>
+    window.addEventListener(
       'message',
       e => receiveMessage(e, iframe, options || config, resolve),
       false
-    );
-  });
+    )
+  );
 };

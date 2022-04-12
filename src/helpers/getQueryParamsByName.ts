@@ -5,7 +5,7 @@ export const getQueryParamsByName = (name: string, url?: string) => {
 
   name = name.replace(/[\[\]]/g, '\\$&');
 
-  const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+  const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`);
   const results = regex.exec(url);
 
   if (!results || !results[2]) {

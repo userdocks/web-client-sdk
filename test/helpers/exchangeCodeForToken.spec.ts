@@ -6,18 +6,18 @@ jest.mock('../../src/helpers/generateUuid');
 jest.mock('../../src/helpers/getQueryParams');
 jest.mock('../../src/helpers/getQueryParamsByName');
 
-let orginalFetch = global.window.fetch;
+const orginalFetch = global.window.fetch;
 
 beforeAll(() => {
   global.window.fetch = jest.fn().mockReturnValue(
     new Promise(resolve => {
       resolve({
         json: () =>
-          new Promise(resolve => {
-            return resolve({
+          new Promise(resolve =>
+            resolve({
               ...token,
-            });
-          }),
+            })
+          ),
       });
     })
   );

@@ -1,8 +1,5 @@
-export const splittedLocationPathname = () => {
-  return window.location.pathname
-    .split('/')
-    .filter((item: string) => item !== '');
-};
+export const splittedLocationPathname = () =>
+  window.location.pathname.split('/').filter((item: string) => item !== '');
 
 export const hasLanguage = () => {
   const split = splittedLocationPathname();
