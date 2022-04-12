@@ -1,3 +1,8 @@
+0.4.0 - April, 12 2022
+
+* ea28e03 Feat: silentRefresh abort after 5s idle | fix eslint errors (JPeer264)
+* 165d695 Chore: fix vulnerability minimist (JPeer264)
+
 0.3.0 - April, 12 2022
 
 * a653530 Feat: add auto refresh for getToken (JPeer264)
