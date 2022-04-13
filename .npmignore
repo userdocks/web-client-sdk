@@ -7,3 +7,4 @@ test
 .globals.d.ts
 jest.config.js
 tsconfig.json
+.parcel-cache
