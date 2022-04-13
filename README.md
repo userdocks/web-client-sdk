@@ -10,6 +10,7 @@
 ## Table of Contents
 
 - [Install](#install)
+- [Usage](#usage)
 - [Methods](#methods)
   - [userdocks.initialize](#userdocksinitialize)
   - [userdocks.terminate](#userdocksterminate)
@@ -18,7 +19,6 @@
   - [userdocks.silentRefresh](#userdockssilentrefresh)
   - [userdocks.redirectTo](#userdocksredirectto)
   - [userdocks.logout](#userdockslogout)
-- [Usage](#usage)
 - [Usage for Development](#usage-for-development)
 
 ## **Install**
@@ -26,6 +26,41 @@
 ```bash
 npm i @userdocks/web-client-sdk
 ```
+
+## **Usage**
+
+Use the module in the project:
+
+```js
+import userdocks from '@userdocks/web-client-sdk';
+
+const config = {
+  authServer: {
+    apiUri: '<the-uri-of-an-auth-server-api>',
+    loginUri: '<the-uri-of-an-auth-server-login>',
+    sdkUri: '<the-uri-of-an-auth-server-sdk>',
+  },
+  app: {
+    origin: '<the-uri-of-your-application>',
+    clientId: '<an-uuid-of-an-application-on-uderdocks>',
+    redirectUri: '<the-redirect-uri-of-your-application>',
+  },
+};
+
+// initialize userdocks with your config
+await userdocks.initialize(config);
+
+await userdocks.exchangeCodeForToken();
+await userdocks.getToken();
+await userdocks.silentRefresh();
+
+userdocks.redirectTo('signIn');
+// or
+userdocks.redirectTo('signUp');
+
+await userdocks.logout();'
+```
+
 
 ## **Methods**
 
@@ -180,35 +215,6 @@ const logoutObj = await userdocks.logout();
 - **logoutObj** `<object>`: a promise that should resolve to an object holding two key value pairs
   - **success** `<boolean>`
   - **loginUri** `<string>`
-
-## **Usage**
-
-Use the module in the project:
-
-```js
-import getUserdocks from '@userdocks/web-client-sdk';
-
-const config = {
-  authServer: {
-    apiUri: '<the-uri-of-an-auth-server-api>',
-    loginUri: '<the-uri-of-an-auth-server-login>',
-    sdkUri: '<the-uri-of-an-auth-server-sdk>',
-  },
-  app: {
-    origin: '<the-uri-of-your-application>',
-    clientId: '<an-uuid-of-an-application-on-uderdocks>',
-    redirectUri: '<the-redirect-uri-of-your-application>',
-  },
-};
-
-const userdocks = await getUserdocks(config);
-
-await userdocks.exchangeCodeForToken();
-await userdocks.getToken();
-await userdocks.silentRefresh();
-userdocks.redirectTo('signIn'); // 'signUp'
-await userdocks.logout();'
-```
 
 ## **Usage for Development**
 
