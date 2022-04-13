@@ -13,5 +13,7 @@ export const redirectTo = (type: TRedirectType, options: IOptions) => {
   localStorage.setItem(`${domain}:${audience}:nonce`, nonce);
   const url = `${loginUri}?client_id=${audience}&state=${state}&type=${type}&redirect_uri=${redirectUri}`;
 
-  return (window.location.href = url);
+  window.location.href = url;
+
+  return url;
 };

@@ -8,7 +8,7 @@ export const logout = (options: IOptions): Promise<ILogout> => {
   const loginUri = options?.authServer?.loginUri || config.authServer?.loginUri;
   const clientId =
     localStorage.getItem(`${domain}:clientId`) ||
-    options.app.clientId ||
+    options.app?.clientId ||
     config.app.clientId;
   const prompt = 'none';
 
@@ -21,11 +21,11 @@ export const logout = (options: IOptions): Promise<ILogout> => {
   iframe.style.display = 'none';
   document.body.appendChild(iframe);
 
-  return new Promise(resolve =>
+  return new Promise(resolve => {
     window.addEventListener(
       'message',
       e => receiveMessage(e, iframe, options, resolve),
       false
-    )
-  );
+    );
+  });
 };

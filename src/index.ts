@@ -1,5 +1,4 @@
-import * as Types from './types';
-import { getUserdocks } from './getUserdocks';
+import userdocks from './userdocks';
 
-export default getUserdocks;
-export { Types };
+export * from './types';
+export default userdocks;

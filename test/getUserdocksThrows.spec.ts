@@ -1,6 +1,5 @@
 import { config } from '../src/config';
-import { getUserdocks } from '../src/getUserdocks';
-import { TUserdocks } from '../src/types';
+import userdocks from '../src/userdocks';
 
 jest.mock('../src/helpers/logout', () => ({
   logout: async () => {
@@ -14,24 +13,23 @@ jest.mock('../src/helpers/silentRefresh', () => ({
 }));
 
 describe('Userdocks', () => {
-  let identity: TUserdocks;
-
   describe('without web worker', () => {
     beforeAll(async () => {
       (global as any).window = {};
       (global as any).window.Worker = undefined;
 
-      identity?.terminate();
-      identity = await getUserdocks(config);
+      userdocks.terminate();
+      await userdocks.initialize(config);
     });
 
     test('slientRefresh', async () => {
-      const data = await identity.silentRefresh();
+      const data = await userdocks.silentRefresh();
 
       expect(data).toBeFalsy();
     });
+
     test('logout', async () => {
-      const data = await identity.logout();
+      const data = await userdocks.logout();
 
       expect(data).toEqual({
         success: false,

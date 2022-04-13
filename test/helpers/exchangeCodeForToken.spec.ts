@@ -35,7 +35,11 @@ describe('exchangeCodeForToken', () => {
   test('with empty config sould use default config and should return a token object', async () => {
     const data = await exchangeCodeForToken({
       authServer: {},
-      app: {},
+      app: {
+        clientId: '',
+        origin: '',
+        redirectUri: '',
+      },
     });
 
     expect(data).toEqual(token);

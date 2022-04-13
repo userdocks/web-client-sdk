@@ -18,7 +18,11 @@ describe('logout', () => {
 
     logout({
       authServer: {},
-      app: {},
+      app: {
+        clientId: '',
+        origin: '',
+        redirectUri: '',
+      },
     });
 
     expect(window.addEventListener).toBeCalledTimes(1);

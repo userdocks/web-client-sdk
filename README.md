@@ -11,13 +11,13 @@
 
 - [Install](#install)
 - [Methods](#methods)
-  - [getUserdocks](#getuserdocks)
-    - [userdocks.terminate](#userdocksterminate)
-    - [userdocks.exchangeCodeForToken](#userdocksexchangecodefortoken)
-    - [userdocks.getToken](#userdocksgettoken)
-    - [userdocks.silentRefresh](#userdockssilentrefresh)
-    - [userdocks.redirectTo](#userdocksredirectto)
-    - [userdocks.logout](#userdockslogout)
+  - [userdocks.initialize](#userdocksinitialize)
+  - [userdocks.terminate](#userdocksterminate)
+  - [userdocks.exchangeCodeForToken](#userdocksexchangecodefortoken)
+  - [userdocks.getToken](#userdocksgettoken)
+  - [userdocks.silentRefresh](#userdockssilentrefresh)
+  - [userdocks.redirectTo](#userdocksredirectto)
+  - [userdocks.logout](#userdockslogout)
 - [Usage](#usage)
 - [Usage for Development](#usage-for-development)
 
@@ -31,16 +31,18 @@ npm i @userdocks/web-client-sdk
 
 Documentation of all the functions and methods this SDK exposes.
 
-### **getUserdocks**
+### **userdocks.initialize**
 
-This method returns a Promise that resolves to an object (TUserdocks) that exposes methods like: `exchangeCodeForToken`, `getToken`, `silentRefresh`, `redirectTo`, `logout`, `terminate`.
+This method must be called before using any other methods.
 
 **Syntax**
 
-Returns a promise that should resolve a new object.
+Returns a promise
 
 ```js
-const userdocks = await getUserdocks(options);
+import userdocks from '@userdocks/web-client-sdk';
+
+await userdocks.initialize(options);
 ```
 
 **Parameters**
@@ -56,15 +58,6 @@ const userdocks = await getUserdocks(options);
     - **clientId** `<string>`: the UUID of an userdocks application (_required_)
     - **redirectUri** `<string>`: the redirect uri of the userdocks application (_required_)
 
-**Return Value**
-
-- **userdocks** `<object>`: a promise that resolves an object that holds multiple key value pairs
-  - **terminate** `<function>`: a method to terminate the token store
-  - **exchangeCodeForToken** `<function>`: a method that returns a promise that should resolve to a boolean. It tries to exchane the code in a redirect uri for a an id and access token and put it into the store
-  - **getToken** `<function>`: a method that return a promise to resolve a token object
-  - **silentRefresh** `<function>`: a method that returns a promise that should resolve to a boolean. It tries to refresh an access token with an refresh token via an invisible iframe embedded in the website.
-  - **logout** `<function>`: a method that returns a promise that should resolve to an object holding the loginUri
-
 ### **userdocks.terminate**
 
 Returns void and resets the store and web worker of userdocks.
@@ -72,7 +65,7 @@ Returns void and resets the store and web worker of userdocks.
 **Syntax**
 
 ```js
-const userdocks = await getUserdocks(options);
+import userdocks from '@userdocks/web-client-sdk';
 
 userdocks.terminate();
 ```
@@ -92,7 +85,7 @@ Returns a promise that should resolve to a boolean that indicates if an exchange
 Returns a promise that should resolve a boolean.
 
 ```js
-const userdocks = await getUserdocks(options);
+import userdocks from '@userdocks/web-client-sdk';
 
 const isSuccessfulExchange = await userdocks.exchangeCodeForToken();
 ```
@@ -110,7 +103,7 @@ Returns a promise that should resolve a token object.
 Returns a boolean that should resolve a new object.
 
 ```js
-const userdocks = await getUserdocks(options);
+import userdocks from '@userdocks/web-client-sdk';
 const token = await userdocks.getToken(getTokenOptions);
 ```
 
@@ -139,7 +132,7 @@ Returns a promise that should resolve to a boolean that indicates if an refresh 
 Returns a promise that should resolve a boolean.
 
 ```js
-const userdocks = await getUserdocks(options);
+import userdocks from '@userdocks/web-client-sdk';
 
 const isSuccessfulExchange = await userdocks.silentRefresh();
 ```
@@ -157,7 +150,7 @@ Returns a string setting the `window.location.href` to the 'signIn' or 'signUp' 
 Returns a string.
 
 ```js
-const userdocks = await getUserdocks(options);
+import userdocks from '@userdocks/web-client-sdk';
 
 userdocks.redirectTo(redirectType);
 ```
@@ -177,7 +170,7 @@ Returns a promise that should resolve to an object that holds the loginUri.
 **Syntax**
 
 ```js
-const userdocks = await getUserdocks(options);
+import userdocks from '@userdocks/web-client-sdk';
 
 const logoutObj = await userdocks.logout();
 ```

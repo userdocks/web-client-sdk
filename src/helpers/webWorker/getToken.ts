@@ -18,11 +18,12 @@ export const getToken = async (
     // so we save the resolve into a global state to resuse it later
     workerResolver[uuid] = resolve;
 
+    // eslint-disable-next-line no-param-reassign
     worker.onmessage = (e: MessageEvent) => {
       const data = getData(e);
 
       if (data?.request?.type !== 'getToken' || !('uuid' in data.payload)) {
-        return;
+        return undefined;
       }
 
       // pop the latest resolve and resolve from this one

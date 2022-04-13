@@ -25,6 +25,7 @@ describe('redirectTo', () => {
     // cleanup
     global.window = originalWindow;
   });
+
   test('successful', async () => {
     // setup
     const originalWindow = window;
@@ -37,7 +38,11 @@ describe('redirectTo', () => {
 
     const data = await redirectTo('signIn', {
       authServer: {},
-      app: {},
+      app: {
+        clientId: '',
+        origin: '',
+        redirectUri: '',
+      },
     });
 
     expect(data).toBe(

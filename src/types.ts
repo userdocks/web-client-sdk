@@ -1,4 +1,4 @@
-import getUserdocks from '.';
+import userdocks from '.';
 
 export interface IToken {
   tokenType: 'Bearer' | null;
@@ -99,19 +99,11 @@ export interface IOptions {
     loginUri?: string;
     sdkUri?: string;
   };
-  app: {
-    origin?: string;
-    clientId?: string;
-    redirectUri?: string;
+  app?: {
+    origin: string;
+    clientId: string;
+    redirectUri: string;
   };
-}
-
-export interface IToken {
-  tokenType: 'Bearer' | null;
-  expiresIn: number | null;
-  redirectUri: string | null;
-  accessToken: string | null;
-  idToken: string | null;
 }
 
 export interface ITokenResponse {
@@ -216,5 +208,4 @@ export interface Tenant {
 
 export type TRedirectType = 'signIn' | 'signUp';
 
-type UnPromisify<T> = T extends Promise<infer U> ? U : T;
-export type TUserdocks = UnPromisify<ReturnType<typeof getUserdocks>>;
+export type TUserdocks = typeof userdocks;
