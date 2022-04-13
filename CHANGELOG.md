@@ -1,3 +1,7 @@
+0.5.4 - April, 13 2022
+
+* 410cf62 Chore: move to userdocks file names (JPeer264)
+
 0.5.3 - April, 13 2022
 
 * e3a581f Chore: read amdname (JPeer264)
