@@ -1,6 +1,6 @@
 {
   "name": "@userdocks/web-client-sdk",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "The JavaScript web client SDK for userdocks. Securly store, access, and refresh access tokens in your browser application.",
   "source": "./src/index.ts",
   "main": "./dist/web-client-sdk.cjs",

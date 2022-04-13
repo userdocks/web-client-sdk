@@ -1,3 +1,8 @@
+0.5.0 - April, 13 2022
+
+* 3919279 Feat: make iife available | different way of initializing userdocks (JPeer264)
+* 5f2c6fd Fix: replace trailingslash (JPeer264)
+
 0.4.0 - April, 12 2022
 
 * ea28e03 Feat: silentRefresh abort after 5s idle | fix eslint errors (JPeer264)
