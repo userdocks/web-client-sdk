@@ -12,10 +12,10 @@
   "scripts": {
     "lint": "eslint --ext .js,.ts .",
     "test": "jest --coverage",
-    "build": "microbundle",
+    "build": "rm -rf ./dist && microbundle",
     "dev": "microbundle watch",
     "cleanup": "rm -rf ./node_modules && rm -rf ./dist && npm i",
-    "prepublishOnly": "npm test && npm run build"
+    "prepublishOnly": "npm run build"
   },
   "targets": {
     "bootstrap": {
