@@ -1,3 +1,8 @@
+0.5.1 - April, 13 2022
+
+* f318104 Chore: exclude parcel cache (JPeer264)
+* fdcda3c Chore: change publish methods (JPeer264)
+
 0.5.0 - April, 13 2022
 
 * 3919279 Feat: make iife available | different way of initializing userdocks (JPeer264)
