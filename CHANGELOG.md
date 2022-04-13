@@ -1,3 +1,7 @@
+0.5.3 - April, 13 2022
+
+* e3a581f Chore: read amdname (JPeer264)
+
 0.5.2 - April, 13 2022
 
 * ea9aa79 Chore: correct bundles in pkg json (JPeer264)
