@@ -1,3 +1,7 @@
+0.5.2 - April, 13 2022
+
+* ea9aa79 Chore: correct bundles in pkg json (JPeer264)
+
 0.5.1 - April, 13 2022
 
 * f318104 Chore: exclude parcel cache (JPeer264)
