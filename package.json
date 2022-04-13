@@ -7,6 +7,7 @@
   "module": "./dist/web-client-sdk.modern.js",
   "unpkg": "./dist/web-client-sdk.umd.js",
   "types": "./dist/index.d.ts",
+  "amdName": "userdocks",
   "private": false,
   "scripts": {
     "lint": "eslint --ext .js,.ts .",
