@@ -6,7 +6,7 @@ export const getWebWorker = async (options: IOptions) => {
   const { sdkUri } = getOptions(options);
 
   try {
-    const res = await fetch(`${sdkUri}/identity-worker.js`);
+    const res = await fetch(`${sdkUri}/identity-worker.js?v=1`);
     const data = await res.text();
     const workerSrcBlob = new Blob([data], {
       type: 'text/javascript',
