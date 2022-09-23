@@ -1,3 +1,8 @@
+0.5.5 - September, 23 2022
+
+* 26f4ef6 Fix: add version to web worker (aichbauer)
+* 2084cd9 Docs: update usage (JPeer264)
+
 0.5.4 - April, 13 2022
 
 * 410cf62 Chore: move to userdocks file names (JPeer264)
