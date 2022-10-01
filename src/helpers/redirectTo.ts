@@ -4,12 +4,11 @@ import { IOptions, IRedirectOptions } from '../types';
 
 export const redirectTo = (options: IOptions, redirectOptions: IRedirectOptions) => {
   const  { type, payment } = redirectOptions;
-
   const state = generateUuid();
   const nonce = generateUuid();
   const { redirectUri, loginUri, paymentUri, audience, domain } = getOptions(options);
-  const uri = redirectOptions.type === 'payment' ? paymentUri : loginUri;
-  const queryParameter = redirectOptions.type === 'payment'
+  const uri = type === 'payment' ? paymentUri : loginUri;
+  const queryParameter = type === 'payment'
     ? `client_id=${audience}&state=${payment?.state}&type=${type}&session_id=${payment?.sessionId}&hash=${payment?.hash}`
     : `client_id=${audience}&state=${state}&type=${type}&redirect_uri=${redirectUri}`;
 

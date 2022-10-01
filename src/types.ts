@@ -97,6 +97,7 @@ export interface IOptions {
     apiUri?: string;
     domain?: string;
     loginUri?: string;
+    paymentUri?: string;
     sdkUri?: string;
   };
   app?: {

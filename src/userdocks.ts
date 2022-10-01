@@ -138,7 +138,6 @@ const userdocks = {
     return false;
   },
   redirectTo(redirectOptions: IRedirectOptions) {
-    console.log('IN1')
     warn();
 
     return redirectTo(options, redirectOptions);
