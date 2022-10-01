@@ -1,3 +1,8 @@
+0.6.0 - October, 01 2022
+
+* 1de5cef Fix: correct the payment url and add test (aichbauer)
+* ca8a7cb Feat: update redirectTo for payment (aichbauer)
+
 0.5.5 - September, 23 2022
 
 * 26f4ef6 Fix: add version to web worker (aichbauer)
