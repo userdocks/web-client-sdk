@@ -31,7 +31,7 @@ export const exchangeCodeForToken = async (options: IOptions) => {
   localStorage.setItem(`${domain}:clientId`, clientId);
 
   if (!code || !service || !clientId) {
-    redirectTo('signUp', options);
+    redirectTo(options, { type: 'signUp' });
 
     return defaultToken;
   }
@@ -77,7 +77,7 @@ export const exchangeCodeForToken = async (options: IOptions) => {
     const isAudience = aud === clientId;
 
     if (!isAudience || !isIssuedBy || !isNonce || !isRedirectUri) {
-      redirectTo('signUp', options);
+      redirectTo(options, { type: 'signUp' });
 
       return defaultToken;
     }

@@ -16,7 +16,7 @@ describe('redirectTo', () => {
       },
     });
 
-    const data = await redirectTo('signUp', config);
+    const data = await redirectTo(config, { type: 'signUp' });
 
     expect(data).toBe(
       'https://login.userdocks.com?client_id=f0af4569-4d5d-4c20-af95-5a80c74e30a6&state=30e9651e-3e4d-4a67-94bc-b35edb9924be&type=signUp&redirect_uri=https://app.userdocks.com'
@@ -36,14 +36,14 @@ describe('redirectTo', () => {
       },
     });
 
-    const data = await redirectTo('signIn', {
+    const data = await redirectTo({
       authServer: {},
       app: {
         clientId: '',
         origin: '',
         redirectUri: '',
       },
-    });
+    }, { type: 'signIn' });
 
     expect(data).toBe(
       'https://login.userdocks.com?client_id=f0af4569-4d5d-4c20-af95-5a80c74e30a6&state=30e9651e-3e4d-4a67-94bc-b35edb9924be&type=signIn&redirect_uri=https://app.userdocks.com'

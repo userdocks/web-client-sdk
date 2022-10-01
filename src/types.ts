@@ -106,6 +106,15 @@ export interface IOptions {
   };
 }
 
+export interface IRedirectOptions {
+  payment?: {
+    sessionId?: string;
+    hash?: string;
+    state?: string;
+  };
+  type: TRedirectType;
+}
+
 export interface ITokenResponse {
   token_type: 'Bearer' | null;
   expires_in: number | null;
@@ -206,6 +215,6 @@ export interface Tenant {
   users: User[];
 }
 
-export type TRedirectType = 'signIn' | 'signUp';
+export type TRedirectType = 'signIn' | 'signUp' | 'payment';
 
 export type TUserdocks = typeof userdocks;

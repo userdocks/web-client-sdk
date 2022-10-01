@@ -50,7 +50,7 @@ describe('Userdocks', () => {
     });
 
     test('redirectTo', async () => {
-      const data = await userdocks.redirectTo('signIn');
+      const data = await userdocks.redirectTo({ type: 'signIn' });
 
       expect(data).toBeTruthy();
     });
@@ -112,7 +112,7 @@ describe('Userdocks', () => {
   });
 
   test('redirectTo', async () => {
-    const data = await userdocks.redirectTo('signIn');
+    const data = await userdocks.redirectTo({ type: 'signIn' });
 
     expect(data).toBeTruthy();
   });

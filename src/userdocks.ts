@@ -5,7 +5,7 @@ import { logout } from './helpers/logout';
 import { redirectTo } from './helpers/redirectTo';
 import { silentRefresh } from './helpers/silentRefresh';
 import { getTokenStoreWithoutWebWorker } from './helpers/storeWithoutWebWorker/getTokenStoreWithoutWebWorker';
-import { IOptions, IToken, TRedirectType } from './types';
+import { IOptions, IRedirectOptions, IToken, TRedirectType } from './types';
 import { getToken } from './helpers/webWorker/getToken';
 import { getWebWorker } from './helpers/webWorker/getWebWorker';
 import { message } from './helpers/message';
@@ -137,10 +137,11 @@ const userdocks = {
     }
     return false;
   },
-  redirectTo(redirectType: TRedirectType) {
+  redirectTo(redirectOptions: IRedirectOptions) {
+    console.log('IN1')
     warn();
 
-    return redirectTo(redirectType, options);
+    return redirectTo(options, redirectOptions);
   },
   async logout() {
     warn();

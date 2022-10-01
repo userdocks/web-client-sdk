@@ -3,6 +3,7 @@ export const config = {
     domain: 'userdocks.com',
     apiUri: 'https://api.userdocks.com',
     loginUri: 'https://login.userdocks.com',
+    paymentUri: 'https://payment.userdocks.com',
     sdkUri: 'https://sdk.userdocks.com',
   },
   app: {
