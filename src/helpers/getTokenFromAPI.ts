@@ -7,16 +7,21 @@ import { getOptions } from './getOptions';
 import { redirectTo } from './redirectTo';
 import { generateUuid } from './generateUuid';
 
-export const exchangeCodeForToken = async (options: IOptions) => {
+export const getTokenFromAPI = async (
+  type: 'exchangeCodeForToken' | 'refresh',
+  options: IOptions
+) => {
   const { baseUri, domain, issuer } = getOptions(options);
   const queryParams = getQueryParams();
   const savedNonce = generateUuid();
-  const URL = `${baseUri.replace(
+  const path = type === 'refresh'
+    ? '/rest/pc/refresh'
+    : '/rest/pc/login/oauth/identity/token';
+  const requestUrl = `${baseUri.replace(
     /\/$/,
     ''
-  )}/rest/pc/login/oauth/identity/token`;
+  )}${path}`;
   const language = lang();
-
   const {
     code,
     state,
@@ -29,6 +34,11 @@ export const exchangeCodeForToken = async (options: IOptions) => {
   } = queryParams;
 
   localStorage.setItem(`${domain}:clientId`, clientId);
+  const refreshToken = sessionStorage.getItem('refreshToken');
+
+  if (type === 'refresh' && refreshToken === '') {
+    return defaultToken;
+  }
 
   if (!code || !service || !clientId) {
     redirectTo(options, { type: 'signUp' });
@@ -36,7 +46,7 @@ export const exchangeCodeForToken = async (options: IOptions) => {
     return defaultToken;
   }
   try {
-    const res = await fetch(URL, {
+    const res = await fetch(requestUrl, {
       method: 'post',
       headers: {
         Accept: 'application/json; charset=utf-8',
@@ -55,6 +65,10 @@ export const exchangeCodeForToken = async (options: IOptions) => {
         nonce: savedNonce,
         auth_time: authTime,
         scope,
+        ...(type === 'refresh' ? {
+          prompt: 'none',
+          refresh_token: sessionStorage.getItem('refreshToken'),
+        } : {})
       }),
     });
 
@@ -65,6 +79,7 @@ export const exchangeCodeForToken = async (options: IOptions) => {
       expiresIn: data?.expiresIn,
       tokenType: data?.tokenType,
       redirectUri: data?.redirectUri,
+      refreshToken: data?.refreshToken,
     };
 
     const token = jwtDecode(dataAsToken?.idToken, 'id');

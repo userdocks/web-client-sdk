@@ -6,4 +6,5 @@ export const defaultToken: IToken = {
   redirectUri: null,
   accessToken: null,
   idToken: null,
+  refreshToken: null,
 };

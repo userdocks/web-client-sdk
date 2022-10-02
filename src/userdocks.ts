@@ -1,11 +1,11 @@
 import { config } from './config';
 import { defaultToken } from './helpers/defaultToken';
-import { exchangeCodeForToken } from './helpers/exchangeCodeForToken';
+import { getTokenFromAPI } from './helpers/getTokenFromAPI';
 import { logout } from './helpers/logout';
 import { redirectTo } from './helpers/redirectTo';
 import { silentRefresh } from './helpers/silentRefresh';
 import { getTokenStoreWithoutWebWorker } from './helpers/storeWithoutWebWorker/getTokenStoreWithoutWebWorker';
-import { IOptions, IRedirectOptions, IToken, TRedirectType } from './types';
+import { IOptions, IRedirectOptions, IToken } from './types';
 import { getToken } from './helpers/webWorker/getToken';
 import { getWebWorker } from './helpers/webWorker/getWebWorker';
 import { message } from './helpers/message';
@@ -55,7 +55,8 @@ const userdocks = {
     warn();
 
     try {
-      const token = await exchangeCodeForToken(options);
+      const token = await getTokenFromAPI('exchangeCodeForToken', options);
+      sessionStorage.setItem('refreshToken', token.refreshToken || '');
 
       if (worker) {
         worker.postMessage(message('setToken', { payload: token }));
@@ -69,6 +70,7 @@ const userdocks = {
         'A request to echange a code for a token failed. Make sure that all properties of the config object are correct.'
       );
     }
+
     return false;
   },
   async getToken({ refresh }: { refresh?: boolean } = {}): Promise<IToken> {
@@ -91,7 +93,7 @@ const userdocks = {
         renewPromise = false;
 
         globalPromise = new Promise(resolve => {
-          this.silentRefresh()
+          this.refresh()
             .then(resolve)
             .catch(() => {
               renewPromise = true;
@@ -110,6 +112,28 @@ const userdocks = {
     }
 
     return token;
+  },
+  async refresh() {
+    warn();
+
+    try {
+      const token = await getTokenFromAPI('refresh', options);
+      sessionStorage.setItem('refreshToken', token.refreshToken || '');
+
+      if (worker) {
+        worker.postMessage(message('setToken', { payload: token }));
+      } else {
+        tokenStoreWithoutWebWorker.setToken(token);
+      }
+
+      return true;
+    } catch(err) {
+      console.error(
+        'A request for a refresh failed. Make sure that all properties of the config object are correct.'
+      );
+    }
+
+    return false;
   },
   async silentRefresh() {
     warn();
