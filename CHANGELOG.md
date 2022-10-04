@@ -1,3 +1,7 @@
+0.8.0 - October, 04 2022
+
+* c34745a Feat: add generateState, fix helpers and type, update docs (aichbauer)
+
 0.7.0 - October, 04 2022
 
 * cc6da48 Feat: update redirects and logout (aichbauer)
