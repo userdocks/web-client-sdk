@@ -3,13 +3,13 @@ import { receiveMessage } from './receiveMessage';
 import { ILogout, IOptions } from '../types';
 
 export const logout = (options: IOptions): Promise<ILogout> => {
-  const redirectUri = options?.app?.redirectUri || config.app.redirectUri;
+  const redirectUri = options?.app?.redirectUri || config?.app?.redirectUri || '';
   const domain = options?.authServer?.domain || config.authServer?.domain;
   const loginUri = options?.authServer?.loginUri || config.authServer?.loginUri;
   const clientId =
     localStorage.getItem(`${domain}:clientId`) ||
     options.app?.clientId ||
-    config.app.clientId;
+    config?.app?.clientId;
   const prompt = 'none';
 
   localStorage.clear();

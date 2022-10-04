@@ -1,4 +1,6 @@
-export const config = {
+import { IOptions } from "../types";
+
+export const config: IOptions = {
   authServer: {
     domain: 'userdocks.com',
     apiUri: 'https://api.userdocks.com',
@@ -7,6 +9,7 @@ export const config = {
     sdkUri: 'https://sdk.userdocks.com',
   },
   app: {
+    refreshType: 'refresh',
     origin: 'https://login.userdocks.com',
     clientId: 'f0af4569-4d5d-4c20-af95-5a80c74e30a6',
     redirectUri: 'https://app.userdocks.com',

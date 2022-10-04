@@ -34,13 +34,17 @@ Use the module in the project:
 ```js
 import userdocks from '@userdocks/web-client-sdk';
 
-const config = {
+const options = {
+  // e.g. if using a cname
   authServer: {
-    apiUri: '<the-uri-of-an-auth-server-api>',
-    loginUri: '<the-uri-of-an-auth-server-login>',
-    sdkUri: '<the-uri-of-an-auth-server-sdk>',
+    domain: `<domain-of-the-auth-server>`
+    apiUri: '<the-payment-uri-of-your-application>',
+    paymentUri: '<the-payment-uri-of-your-application>',
+    loginUri: '<the-payment-uri-of-your-application>',
+    sdkUri: '<the-payment-uri-of-your-application>',
   },
   app: {
+    refreshType: '<refresh> or <silentRefresh>'
     origin: '<the-uri-of-your-application>',
     clientId: '<an-uuid-of-an-application-on-uderdocks>',
     redirectUri: '<the-redirect-uri-of-your-application>',
@@ -48,19 +52,18 @@ const config = {
 };
 
 // initialize userdocks with your config
-await userdocks.initialize(config);
+await userdocks.initialize(options);
+// if you want to destroy the store of your tokens
+userdocks.terminate();
 
 await userdocks.exchangeCodeForToken();
 await userdocks.getToken();
+await userdocks.refresh();
+// only if refreshType in your options is silentRefresh
 await userdocks.silentRefresh();
-
-userdocks.redirectTo('signIn');
-// or
-userdocks.redirectTo('signUp');
-
+userdocks.redirectTo({ type: 'signIn' });
 await userdocks.logout();'
 ```
-
 
 ## **Methods**
 
@@ -96,6 +99,10 @@ await userdocks.initialize(options);
     - **origin** `<string>`: the uri of the client application (_required_)
     - **clientId** `<string>`: the UUID of an userdocks application (_required_)
     - **redirectUri** `<string>`: the redirect uri of the userdocks application (_required_)
+
+**Return Value**
+
+- **undefined** `<undefined>`
 
 ### **userdocks.terminate**
 
@@ -153,16 +160,19 @@ const token = await userdocks.getToken(getTokenOptions);
 
 **Return Value**
 
-- **token** `<object>`: a promise that should resolve an object holding 5 key value pairs
+- **token** `<object>`: a promise that should resolve an object holding 6 key value pairs
   - **tokenType** `<"Bearer" | null>`
   - **expiresIn** `<number | null>`: time the token is valid in `ms`
   - **redirectUri** `<string | null>`
   - **idToken** `<string | null>`
   - **accessToken** `<string | null>`
+  - **refreshToken** `<string | null>`
 
 ### **userdocks.silentRefresh**
 
 > **Note:** This method is used when a request fails or the json web token is expired or will expire in near future
+
+> **Note:** This method of refreshing tokens can only be used with CNAMES. Otherwise this will not refresh your tokens when your client has set its cookie settings to disallow third-party-cookies
 
 Returns a promise that should resolve to a boolean that indicates if an refresh of the tokens was successful or not.
 
@@ -191,34 +201,59 @@ Returns a string.
 ```js
 import userdocks from '@userdocks/web-client-sdk';
 
-userdocks.redirectTo(redirectType);
+userdocks.redirectTo({
+  type: 'signIn',
+});
 ```
 
 **Parameters**
 
-- **redirectType** `<"signIn" | "signUp">`
+- **options** `<object>`: an object holding two keys
+  - **payment** `<object>`: an object holding 3 keys (_optional_) (_required_ if type is set to `<payment>`)
+    - **sessionId**: the id of your checkout session created via the rest api
+    - **hash**: the hash of the session created via the rest api
+    - **state**: a 64 character long state that you generated on your client and will be challenged on the server when accessing the payment page
+  - **type**: `<'signIn' | 'signUp' | 'unauthenticated' | 'logout' | 'payment'>`: use `signIn` or `signUp` to redirect to the sign in or sign up page. Use `payment` to redirect to the payment page. Use `unauthenticated` to redirect after an unauthenticated access to your page or after a refresh failed. Use `logout` when logging out users without clearing your refresh token (otherwise use the logout function).
 
 **Return Value**
 
 - **string** `<string>`
 
-### **userdocks.logout**
+### **userdocks.generateState**
 
-Returns a promise that should resolve to an object that holds the loginUri.
+Returns a random string that can be used for generating a client site state for e.g. a payment page.
 
 **Syntax**
 
 ```js
 import userdocks from '@userdocks/web-client-sdk';
 
-const logoutObj = await userdocks.logout();
+const state = await userdocks.generateState(64);
+```
+
+**Parameters**
+
+- **length** `<number>`: an integer defining the length of the state
+
+**Return Value**
+
+- **state** `<string>`: a random string matching the length of the input parameter
+
+### **userdocks.logout**
+
+Returns a promise that should resolve void.
+
+**Syntax**
+
+```js
+import userdocks from '@userdocks/web-client-sdk';
+
+await userdocks.logout();
 ```
 
 **Return Value**
 
-- **logoutObj** `<object>`: a promise that should resolve to an object holding two key value pairs
-  - **success** `<boolean>`
-  - **loginUri** `<string>`
+- **logout** `<void>`
 
 ## **Usage for Development**
 

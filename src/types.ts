@@ -93,15 +93,18 @@ export interface IDecodedJWT {
 
 export type TTokenType = 'access' | 'id';
 
+export type TRefreshType = 'refresh' | 'silentRefresh';
+
 export interface IOptions {
   authServer?: {
-    apiUri?: string;
     domain?: string;
+    apiUri?: string;
     loginUri?: string;
     paymentUri?: string;
     sdkUri?: string;
   };
   app?: {
+    refreshType?: TRefreshType,
     origin: string;
     clientId: string;
     redirectUri: string;

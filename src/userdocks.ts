@@ -10,8 +10,8 @@ import { getToken } from './helpers/webWorker/getToken';
 import { getWebWorker } from './helpers/webWorker/getWebWorker';
 import { message } from './helpers/message';
 import { generateUuid } from './helpers/generateUuid';
-import { getOptions } from './helpers/getOptions';
 import { isLoggedIn } from './helpers/isLoggedIn';
+import { generateRandomString } from './helpers/generateRandom';
 
 const tokenStoreWithoutWebWorker = getTokenStoreWithoutWebWorker;
 let worker: Worker | null = null;
@@ -97,8 +97,12 @@ const userdocks = {
       if (renewPromise) {
         renewPromise = false;
 
+        const refreshFunc = options.app?.refreshType === 'refresh'
+          ? this.refresh
+          : this.silentRefresh;
+
         globalPromise = new Promise(resolve => {
-          this.refresh()
+          refreshFunc()
             .then(resolve)
             .catch(() => {
               renewPromise = true;
@@ -169,6 +173,9 @@ const userdocks = {
     warn();
 
     return redirectTo(options, redirectOptions);
+  },
+  generateState(length = 64) {
+    return generateRandomString(length, true);
   },
   async logout() {
     warn();
