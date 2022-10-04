@@ -1,3 +1,8 @@
+0.7.0 - October, 04 2022
+
+* cc6da48 Feat: update redirects and logout (aichbauer)
+* b8f7257 Feat: WIP - new refresh rotation (aichbauer)
+
 0.6.0 - October, 01 2022
 
 * 1de5cef Fix: correct the payment url and add test (aichbauer)
