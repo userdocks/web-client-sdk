@@ -12,6 +12,9 @@ export const logout = (options: IOptions): Promise<ILogout> => {
     config.app.clientId;
   const prompt = 'none';
 
+  localStorage.clear();
+  sessionStorage.clear();
+
   const iframe = document.createElement('iframe');
   iframe.src = `${loginUri}?&redirect_uri=${encodeURIComponent(
     redirectUri

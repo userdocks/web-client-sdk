@@ -6,6 +6,11 @@ import { defaultToken } from './defaultToken';
 import { getOptions } from './getOptions';
 import { redirectTo } from './redirectTo';
 import { generateUuid } from './generateUuid';
+import { getRefreshToken, Session, setRefreshToken } from './getAndSetRefreshToken';
+import { getClientIdForRequest } from './getClientIdForRequest';
+import { requestUrl } from './getRequestUrl';
+
+export type RequestType = 'exchangeCodeForToken' | 'refresh';
 
 export const getTokenFromAPI = async (
   type: 'exchangeCodeForToken' | 'refresh',
@@ -14,13 +19,7 @@ export const getTokenFromAPI = async (
   const { baseUri, domain, issuer } = getOptions(options);
   const queryParams = getQueryParams();
   const savedNonce = generateUuid();
-  const path = type === 'refresh'
-    ? '/rest/pc/refresh'
-    : '/rest/pc/login/oauth/identity/token';
-  const requestUrl = `${baseUri.replace(
-    /\/$/,
-    ''
-  )}${path}`;
+  const url = requestUrl(type, baseUri);
   const language = lang();
   const {
     code,
@@ -31,22 +30,25 @@ export const getTokenFromAPI = async (
     redirectUri,
     authTime,
     scope,
+    session,
   } = queryParams;
+  const cId = getClientIdForRequest(type, clientId, domain);
+  const refreshToken = getRefreshToken(type, domain, session as Session);
 
-  localStorage.setItem(`${domain}:clientId`, clientId);
-  const refreshToken = sessionStorage.getItem('refreshToken');
+  if (type === 'refresh' && !refreshToken) {
+    return defaultToken;
+  }
+  if (
+    type === 'exchangeCodeForToken'
+    && (!code || !service || !clientId)
+  ) {
+    redirectTo(options, { type: 'unauthenticated' });
 
-  if (type === 'refresh' && refreshToken === '') {
     return defaultToken;
   }
 
-  if (!code || !service || !clientId) {
-    redirectTo(options, { type: 'signUp' });
-
-    return defaultToken;
-  }
   try {
-    const res = await fetch(requestUrl, {
+    const res = await fetch(url, {
       method: 'post',
       headers: {
         Accept: 'application/json; charset=utf-8',
@@ -55,10 +57,10 @@ export const getTokenFromAPI = async (
       credentials: 'include',
       body: JSON.stringify({
         language,
-        service,
+        service: service || 'email',
 
         grant_type: grantType,
-        client_id: clientId,
+        client_id: cId,
         redirect_uri: redirectUri,
         code,
         state,
@@ -67,7 +69,7 @@ export const getTokenFromAPI = async (
         scope,
         ...(type === 'refresh' ? {
           prompt: 'none',
-          refresh_token: sessionStorage.getItem('refreshToken'),
+          refresh_token: refreshToken,
         } : {})
       }),
     });
@@ -85,17 +87,23 @@ export const getTokenFromAPI = async (
     const token = jwtDecode(dataAsToken?.idToken, 'id');
     const { iss, nonce, aud } = token.payload.id as IIdTokenPayload;
     const newRedirectUri = `${window.location.origin}${window.location.pathname}`;
+
     const isNonce = savedNonce === nonce;
     const isIssuedBy = issuer === iss;
-
     const isRedirectUri = dataAsToken?.redirectUri === newRedirectUri;
-    const isAudience = aud === clientId;
+    const isAudience = aud === cId;
 
-    if (!isAudience || !isIssuedBy || !isNonce || !isRedirectUri) {
-      redirectTo(options, { type: 'signUp' });
+    if (!isAudience || !isIssuedBy || !isNonce) {
+      redirectTo(options, { type: 'unauthenticated' });
+
+      return defaultToken;
+    } else if (type === 'exchangeCodeForToken' &&  !isRedirectUri) {
+      redirectTo(options, { type: 'unauthenticated' });
 
       return defaultToken;
     }
+
+    setRefreshToken(type, domain, session as Session, data?.refreshToken);
 
     return dataAsToken;
   } catch (err) {

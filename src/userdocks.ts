@@ -10,6 +10,8 @@ import { getToken } from './helpers/webWorker/getToken';
 import { getWebWorker } from './helpers/webWorker/getWebWorker';
 import { message } from './helpers/message';
 import { generateUuid } from './helpers/generateUuid';
+import { getOptions } from './helpers/getOptions';
+import { isLoggedIn } from './helpers/isLoggedIn';
 
 const tokenStoreWithoutWebWorker = getTokenStoreWithoutWebWorker;
 let worker: Worker | null = null;
@@ -55,8 +57,11 @@ const userdocks = {
     warn();
 
     try {
+      if (isLoggedIn(options)) {
+        return true;
+      }
+
       const token = await getTokenFromAPI('exchangeCodeForToken', options);
-      sessionStorage.setItem('refreshToken', token.refreshToken || '');
 
       if (worker) {
         worker.postMessage(message('setToken', { payload: token }));
@@ -118,7 +123,6 @@ const userdocks = {
 
     try {
       const token = await getTokenFromAPI('refresh', options);
-      sessionStorage.setItem('refreshToken', token.refreshToken || '');
 
       if (worker) {
         worker.postMessage(message('setToken', { payload: token }));
@@ -170,7 +174,7 @@ const userdocks = {
     warn();
 
     try {
-      const logoutSuccess = await logout(options);
+      const logoutObj = await logout(options);
 
       if (worker) {
         worker.postMessage(message('deleteToken'));
@@ -178,16 +182,20 @@ const userdocks = {
         tokenStoreWithoutWebWorker.deleteToken();
       }
 
-      return logoutSuccess;
+      if (logoutObj.success) {
+        return this.redirectTo({
+          type: 'logout',
+        });
+      }
     } catch (err) {
       console.error(
         'A request for a logout failed. Make sure that all properties of the config object are correct.'
       );
     }
-    return {
-      success: false,
-      loginUri: '',
-    };
+
+    return this.redirectTo({
+      type: 'unauthenticated',
+    });
   },
 };
 

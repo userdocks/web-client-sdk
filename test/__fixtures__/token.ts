@@ -13,6 +13,7 @@ export const emptyToken: IToken = {
   redirectUri: null,
   accessToken: null,
   idToken: null,
+  refreshToken: null,
 };
 
 export const token: IToken = {
@@ -21,6 +22,7 @@ export const token: IToken = {
   redirectUri: 'http://localhost/',
   accessToken,
   idToken,
+  refreshToken: 'xyz',
 };
 
 export const wrongAudienceToken: IToken = {
@@ -29,6 +31,7 @@ export const wrongAudienceToken: IToken = {
   redirectUri: 'http://localhost/',
   accessToken,
   idToken: idTokenWrongAudience,
+  refreshToken: 'xyz',
 };
 
 export const wrongIssuerToken: IToken = {
@@ -37,6 +40,7 @@ export const wrongIssuerToken: IToken = {
   redirectUri: 'http://localhost/',
   accessToken,
   idToken: idTokenWrongIssuer,
+  refreshToken: 'xyz',
 };
 
 export const wrongNonceToken: IToken = {
@@ -45,4 +49,5 @@ export const wrongNonceToken: IToken = {
   redirectUri: 'http://localhost/',
   accessToken,
   idToken: idTokenWrongNonce,
+  refreshToken: 'xyz',
 };

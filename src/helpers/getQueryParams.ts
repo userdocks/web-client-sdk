@@ -7,6 +7,8 @@ export const getQueryParams = (grantType = 'authorization_code') => {
   const nonce = getQueryParamsByName('nonce') || generateUuid();
   const service = getQueryParamsByName('service') || '';
   const clientId = getQueryParamsByName('client_id') || '';
+  const session = getQueryParamsByName('session') || '1';
+  const keepMeLoggedIn = getQueryParamsByName('keepMeLoggedIn') || '';
   const redirectUri = decodeURIComponent(
     getQueryParamsByName('redirect_uri') || ''
   );
@@ -23,5 +25,7 @@ export const getQueryParams = (grantType = 'authorization_code') => {
     scope,
     authTime,
     grantType,
+    session,
+    keepMeLoggedIn,
   };
 };

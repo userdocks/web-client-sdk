@@ -1,5 +1,5 @@
 import { config } from '../../src/config';
-import { exchangeCodeForToken } from '../../src/helpers/exchangeCodeForToken';
+import { getTokenFromAPI } from '../../src/helpers/getTokenFromAPI';
 import * as redirect from '../../src/helpers/redirectTo';
 import {
   emptyToken,
@@ -63,49 +63,49 @@ afterAll(() => {
 
 describe('exchangeCodeForToken', () => {
   test('without a query parameter called "client_id" should return a empty token object and calls redirectTo', async () => {
-    const data = await exchangeCodeForToken(config);
+    const data = await getTokenFromAPI('exchangeCodeForToken', config);
     const spy = jest.spyOn(redirect, 'redirectTo');
 
     expect(data).toEqual(emptyToken);
     expect(spy).toHaveBeenCalledTimes(1);
   });
   test('without a query parameter called "service" should return a empty token object and calls redirectTo', async () => {
-    const data = await exchangeCodeForToken(config);
+    const data = await getTokenFromAPI('exchangeCodeForToken', config);
     const spy = jest.spyOn(redirect, 'redirectTo');
 
     expect(data).toEqual(emptyToken);
     expect(spy).toHaveBeenCalledTimes(2);
   });
   test('without a query parameter called "code" should return a empty token object and calls redirectTo', async () => {
-    const data = await exchangeCodeForToken(config);
+    const data = await getTokenFromAPI('exchangeCodeForToken', config);
     const spy = jest.spyOn(redirect, 'redirectTo');
 
     expect(data).toEqual(emptyToken);
     expect(spy).toHaveBeenCalledTimes(3);
   });
   test('with a wrong audience in the token should return a empty token object and calls redirectTo', async () => {
-    const data = await exchangeCodeForToken(config);
+    const data = await getTokenFromAPI('exchangeCodeForToken', config);
     const spy = jest.spyOn(redirect, 'redirectTo');
 
     expect(data).toEqual(emptyToken);
     expect(spy).toHaveBeenCalledTimes(4);
   });
   test('with a wrong issuer in the token should return a empty token object and calls redirectTo', async () => {
-    const data = await exchangeCodeForToken(config);
+    const data = await getTokenFromAPI('exchangeCodeForToken', config);
     const spy = jest.spyOn(redirect, 'redirectTo');
 
     expect(data).toEqual(emptyToken);
     expect(spy).toHaveBeenCalledTimes(5);
   });
   test('with a wrong nonce in the token should return a empty token object and calls redirectTo', async () => {
-    const data = await exchangeCodeForToken(config);
+    const data = await getTokenFromAPI('exchangeCodeForToken', config);
     const spy = jest.spyOn(redirect, 'redirectTo');
 
     expect(data).toEqual(emptyToken);
     expect(spy).toHaveBeenCalledTimes(6);
   });
   test('with a rejected network request should return a default token', async () => {
-    const data = await exchangeCodeForToken(config);
+    const data = await getTokenFromAPI('exchangeCodeForToken', config);
     const spy = jest.spyOn(redirect, 'redirectTo');
 
     expect(data).toEqual(emptyToken);

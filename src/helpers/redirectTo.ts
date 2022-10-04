@@ -8,9 +8,11 @@ export const redirectTo = (options: IOptions, redirectOptions: IRedirectOptions)
   const nonce = generateUuid();
   const { redirectUri, loginUri, paymentUri, audience, domain } = getOptions(options);
   const uri = type === 'payment' ? paymentUri : loginUri;
+  const unauthenticatedParameter = type === 'unauthenticated' ? `&${type}=true` : '';
+  const logoutParameter = type === 'logout' ? `&${type}=true` : '';
   const queryParameter = type === 'payment'
     ? `client_id=${audience}&state=${payment?.state}&type=${type}&session_id=${payment?.sessionId}&hash=${payment?.hash}`
-    : `client_id=${audience}&state=${state}&type=${type}&redirect_uri=${redirectUri}`;
+    : `client_id=${audience}&state=${state}&type=${type}&redirect_uri=${redirectUri}${unauthenticatedParameter}${logoutParameter}`;
 
   localStorage.setItem(`${domain}:${audience}:state`, state);
   localStorage.setItem(`${domain}:${audience}:type`, type);
@@ -18,7 +20,6 @@ export const redirectTo = (options: IOptions, redirectOptions: IRedirectOptions)
   localStorage.setItem(`${domain}:${audience}:nonce`, nonce);
 
   const url = `${uri}?${queryParameter}`;
-
   window.location.href = url;
 
   return url;

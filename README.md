@@ -84,11 +84,15 @@ await userdocks.initialize(options);
 
 - **options** `<object>`: an object holding two key value pairs
   - **authServer** `<object | undefined>`: an object holding four key value pairs
-    - **apiUri** `<string | undefined>`: the uri of the api of the authetication server (_optional_)
     - **domain** `<string | undefined>`: the domain of the authetication server (_optional_)
+    - **apiUri** `<string | undefined>`: the uri of the api of the authetication server (_optional_)
+    - **paymentUri** `<string | undefined>`: the uri of the payment page of the authetication server (_optional_)
     - **loginUri** `<string | undefined>`: the uri of the login page of the authetication server (_optional_)
     - **sdkUri** `<string | undefined>`: the uri of the SDK of the authetication server (_optional_)
   - **app** `<object>`: an object holding three key value pairs
+    - **refreshType**: `<'silentRefresh' | 'refresh'>`: How to refresh your authorization tokens (_optional_)
+      - *silentRefresh*: uses cookies and an iframe for refreshing the tokens (authServer is required with this option)
+      - *refresh*: uses the localStorage or sessionStorage (only for the refresh token, the access token is only stored in memory) and an HTTP request to refresh the tokens (default value)
     - **origin** `<string>`: the uri of the client application (_required_)
     - **clientId** `<string>`: the UUID of an userdocks application (_required_)
     - **redirectUri** `<string>`: the redirect uri of the userdocks application (_required_)

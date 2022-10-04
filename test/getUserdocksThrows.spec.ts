@@ -31,10 +31,7 @@ describe('Userdocks', () => {
     test('logout', async () => {
       const data = await userdocks.logout();
 
-      expect(data).toEqual({
-        success: false,
-        loginUri: '',
-      });
+      expect(data.includes('unauthenticated=true')).toBeTruthy();
     });
   });
 });

@@ -10,5 +10,6 @@ export const messageData: IMessageData = {
     redirectUri: null,
     accessToken: null,
     idToken: null,
+    refreshToken: null,
   },
 };

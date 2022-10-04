@@ -8,6 +8,10 @@ export const getQueryParamsByName = jest.fn().mockImplementation(arg => {
       return 'authorization_code';
     case 'nonce':
       return '30e9651e-3e4d-4a67-94bc-b35edb9924be';
+    case 'session':
+      return '1';
+    case 'keepMeLoggedIn':
+      return '';
     default:
       return '30e9651e-3e4d-4a67-94bc-b35edb9924be';
   }

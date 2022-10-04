@@ -8,4 +8,6 @@ export const queryParams = {
   scope: '30e9651e-3e4d-4a67-94bc-b35edb9924be',
   authTime: '0',
   grantType: 'authorization_code',
+  session: '1',
+  keepMeLoggedIn: '',
 };

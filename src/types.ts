@@ -217,6 +217,6 @@ export interface Tenant {
   users: User[];
 }
 
-export type TRedirectType = 'signIn' | 'signUp' | 'payment';
+export type TRedirectType = 'signIn' | 'signUp' | 'payment' | 'logout' | 'unauthenticated';
 
 export type TUserdocks = typeof userdocks;
