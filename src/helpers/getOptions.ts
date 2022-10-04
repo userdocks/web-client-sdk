@@ -8,6 +8,7 @@ export const getOptions = (options: IOptions) => {
   const paymentUri = options?.authServer?.paymentUri || config.authServer?.paymentUri || '';
   const sdkUri = options?.authServer?.sdkUri || config.authServer?.sdkUri || '';
   const issuer = config?.app?.clientId || '';
+  const refreshType = options?.app?.refreshType || config?.app?.refreshType || '';
 
   const audience =
     options?.app?.clientId
@@ -26,5 +27,6 @@ export const getOptions = (options: IOptions) => {
     audience,
     baseUri,
     sdkUri,
+    refreshType,
   };
 };

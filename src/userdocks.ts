@@ -12,6 +12,7 @@ import { message } from './helpers/message';
 import { generateUuid } from './helpers/generateUuid';
 import { isLoggedIn } from './helpers/isLoggedIn';
 import { generateRandomString } from './helpers/generateRandom';
+import { getOptions } from './helpers/getOptions';
 
 const tokenStoreWithoutWebWorker = getTokenStoreWithoutWebWorker;
 let worker: Worker | null = null;
@@ -97,7 +98,9 @@ const userdocks = {
       if (renewPromise) {
         renewPromise = false;
 
-        const refreshFunc = options.app?.refreshType === 'refresh'
+        const { refreshType } = getOptions(options);
+
+        const refreshFunc = refreshType === 'refresh'
           ? this.refresh
           : this.silentRefresh;
 
