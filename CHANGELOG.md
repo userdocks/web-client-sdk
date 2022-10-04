@@ -1,3 +1,7 @@
+0.8.1 - October, 05 2022
+
+* ac9dd80 Fix: refresh on getToken (aichbauer)
+
 0.8.0 - October, 04 2022
 
 * c34745a Feat: add generateState, fix helpers and type, update docs (aichbauer)
