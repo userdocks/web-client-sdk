@@ -1,3 +1,7 @@
+0.9.0 - October, 06 2022
+
+* e559b52 Feat: add isInitialized, generateState, fix logout (aichbauer)
+
 0.8.1 - October, 05 2022
 
 * ac9dd80 Fix: refresh on getToken (aichbauer)
