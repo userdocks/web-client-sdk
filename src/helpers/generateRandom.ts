@@ -10,7 +10,7 @@ export const generateRandomString = (length = 64, urlencode = true): string => {
       .replace(/\+/g, '.')
       .replace(/\//g, '_')
       .replace(/=/g, '-')
-      .slice(0, 64);
+      .slice(0, length);
 
     if (urlencode) {
       return randomString;
@@ -24,6 +24,6 @@ export const generateRandomString = (length = 64, urlencode = true): string => {
       // eslint-disable-next-line no-bitwise
       .map(() => (~~(Math.random() * 36)).toString(36))
       .join('')
-      .slice(0, 64)
+      .slice(0, length)
   );
 };

@@ -21,8 +21,10 @@ let globalPromise: Promise<Boolean>;
 let renewPromise = true;
 let options: IOptions;
 
+const isInitialized = () => !!version
+
 const warn = () => {
-  if (!version) {
+  if (isInitialized()) {
     console.warn(
       // todo jpeer: add docs how to initialize userdocks web sdk
       'Userdocks: Make sure to initialize userdocks before you use the method'
@@ -30,8 +32,9 @@ const warn = () => {
   }
 };
 
+
 const userdocks = {
-  initialize: async (userdocksOptions?: IOptions) => {
+  initialize: async (userdocksOptions?: IOptions, ) => {
     options = userdocksOptions || config;
 
     if (version) {
@@ -49,6 +52,7 @@ const userdocks = {
       }
     }
   },
+  isInitialized,
   terminate() {
     worker?.terminate();
     tokenStoreWithoutWebWorker.terminate();
@@ -177,9 +181,6 @@ const userdocks = {
 
     return redirectTo(options, redirectOptions);
   },
-  generateState(length = 64) {
-    return generateRandomString(length, true);
-  },
   async logout() {
     warn();
 
@@ -206,6 +207,9 @@ const userdocks = {
     return this.redirectTo({
       type: 'unauthenticated',
     });
+  },
+  generateState(length = 64) {
+    return generateRandomString(length, true);
   },
 };
 

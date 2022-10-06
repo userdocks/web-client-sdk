@@ -13,12 +13,15 @@
 - [Usage](#usage)
 - [Methods](#methods)
   - [userdocks.initialize](#userdocksinitialize)
+  - [userdocks.isInitialized](#userdocksisinitialized)
   - [userdocks.terminate](#userdocksterminate)
   - [userdocks.exchangeCodeForToken](#userdocksexchangecodefortoken)
   - [userdocks.getToken](#userdocksgettoken)
   - [userdocks.silentRefresh](#userdockssilentrefresh)
+  - [userdocks.refreshefresh](#userdockssilentrefresh)
   - [userdocks.redirectTo](#userdocksredirectto)
   - [userdocks.logout](#userdockslogout)
+  - [userdocks.generateState](#userdocksgeneratestate)
 - [Usage for Development](#usage-for-development)
 
 ## **Install**
@@ -103,6 +106,22 @@ await userdocks.initialize(options);
 **Return Value**
 
 - **undefined** `<undefined>`
+
+### **userdocks.isInitialized**
+
+Returns a boolean indicating if the userdocks object is already initialized.
+
+**Syntax**
+
+```js
+import userdocks from '@userdocks/web-client-sdk';
+
+userdocks.isInitialized();
+```
+
+**Return Value**
+
+- **isInitialized** `<boolean>`
 
 ### **userdocks.terminate**
 
@@ -190,6 +209,28 @@ const isSuccessfulExchange = await userdocks.silentRefresh();
 
 - **isSuccessfulExchange** `<boolean>`: a promise that should resolve a boolean
 
+### **userdocks.refresh**
+
+> **Note:** This method is used when a request fails or the json web token is expired or will expire in near future
+
+> **Note:** This method is the default method of refreshing tokens
+
+Returns a promise that should resolve to a boolean that indicates if an refresh of the tokens was successful or not.
+
+**Syntax**
+
+Returns a promise that should resolve a boolean.
+
+```js
+import userdocks from '@userdocks/web-client-sdk';
+
+const isSuccessfulExchange = await userdocks.refresh();
+```
+
+**Return Value**
+
+- **isSuccessfulExchange** `<boolean>`: a promise that should resolve a boolean
+
 ### **userdocks.redirectTo**
 
 Returns a string setting the `window.location.href` to the 'signIn' or 'signUp' page.
@@ -219,6 +260,23 @@ userdocks.redirectTo({
 
 - **string** `<string>`
 
+### **userdocks.logout**
+
+Returns a promise that should resolve void.
+
+**Syntax**
+
+```js
+import userdocks from '@userdocks/web-client-sdk';
+
+await userdocks.logout();
+```
+
+**Return Value**
+
+- **logout** `<void>`
+
+
 ### **userdocks.generateState**
 
 Returns a random string that can be used for generating a client site state for e.g. a payment page.
@@ -238,22 +296,6 @@ const state = await userdocks.generateState(64);
 **Return Value**
 
 - **state** `<string>`: a random string matching the length of the input parameter
-
-### **userdocks.logout**
-
-Returns a promise that should resolve void.
-
-**Syntax**
-
-```js
-import userdocks from '@userdocks/web-client-sdk';
-
-await userdocks.logout();
-```
-
-**Return Value**
-
-- **logout** `<void>`
 
 ## **Usage for Development**
 

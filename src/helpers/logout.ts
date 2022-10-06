@@ -1,24 +1,38 @@
 import { config } from '../config';
 import { receiveMessage } from './receiveMessage';
 import { ILogout, IOptions } from '../types';
+import { getOptions } from './getOptions';
 
 export const logout = (options: IOptions): Promise<ILogout> => {
-  const redirectUri = options?.app?.redirectUri || config?.app?.redirectUri || '';
-  const domain = options?.authServer?.domain || config.authServer?.domain;
-  const loginUri = options?.authServer?.loginUri || config.authServer?.loginUri;
+  const {
+    redirectUri,
+    domain,
+    loginUri,
+    refreshType,
+  } = getOptions(options);
   const clientId =
     localStorage.getItem(`${domain}:clientId`) ||
     options.app?.clientId ||
     config?.app?.clientId;
   const prompt = 'none';
+  const url = `${loginUri}?redirect_uri=${encodeURIComponent(
+    redirectUri
+  )}&client_id=${clientId}&prompt=${prompt}&logout=true`;
 
   localStorage.clear();
   sessionStorage.clear();
 
+  if (refreshType === 'refresh') {
+    return new Promise(resolve => {
+      resolve({
+        success: true,
+        loginUri: url,
+      });
+    });
+  }
+
   const iframe = document.createElement('iframe');
-  iframe.src = `${loginUri}?&redirect_uri=${encodeURIComponent(
-    redirectUri
-  )}&client_id=${clientId}&prompt=${prompt}&logout=true`;
+  iframe.src = url;
   iframe.style.width = '0px';
   iframe.style.height = '0px';
   iframe.style.display = 'none';

@@ -1,6 +1,6 @@
 import { IOptions } from "../types";
 
-export const config: IOptions = {
+export const config: Required<IOptions> = {
   authServer: {
     domain: 'userdocks.com',
     apiUri: 'https://api.userdocks.com',
