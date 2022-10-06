@@ -1,3 +1,7 @@
+0.9.1 - October, 06 2022
+
+* 324c2c8 Docs: update type (aichbauer)
+
 0.9.0 - October, 06 2022
 
 * e559b52 Feat: add isInitialized, generateState, fix logout (aichbauer)
