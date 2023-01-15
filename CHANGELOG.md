@@ -1,3 +1,7 @@
+0.10.0 - January, 15 2023
+
+* 2c5ffa5 Feat: update worker to new v1 (aichbauer)
+
 0.9.1 - October, 06 2022
 
 * 324c2c8 Docs: update type (aichbauer)
