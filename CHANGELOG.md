@@ -1,3 +1,7 @@
+0.11.0 - January, 24 2023
+
+* 659aab6 Feat: update to v1 rest (aichbauer)
+
 0.10.0 - January, 15 2023
 
 * 2c5ffa5 Feat: update worker to new v1 (aichbauer)
