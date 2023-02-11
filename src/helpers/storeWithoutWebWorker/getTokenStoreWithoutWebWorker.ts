@@ -20,7 +20,10 @@ export const getTokenStoreWithoutWebWorker: ITokenStoreWithoutWebWorker = {
   },
   getToken() {
     const payload = getTokenPayload(this.token.idToken || '', 'id');
-    this.expirationTime = Number(payload?.exp);
+    this.expirationTime = Number(payload?.exp || 0);
+    this.token.expiresIn = this.expirationTime
+      ? this.expirationTime - Math.floor(new Date().getTime() / 1000)
+      : 0;
 
     return this.token;
   },
