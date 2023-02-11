@@ -1,3 +1,7 @@
+0.11.1 - February, 11 2023
+
+* 63ae71d Fix: expiresIn for store wo web worker (aichbauer)
+
 0.11.0 - January, 24 2023
 
 * 659aab6 Feat: update to v1 rest (aichbauer)
