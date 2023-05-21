@@ -1,7 +1,7 @@
 # **@userdocks/web-client-sdk**
 
 ![npm](https://img.shields.io/npm/v/@userdocks/web-client-sdk?style=flat-square)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/userdocks/web-client-sdk/build?style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/userdocks/web-client-sdk/ci.yml?style=flat-square)
 ![Coveralls branch](https://img.shields.io/coveralls/github/userdocks/web-client-sdk/main?style=flat-square)
 ![NPM](https://img.shields.io/npm/l/@userdocks/web-client-sdk?style=flat-square)
 
