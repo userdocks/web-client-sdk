@@ -1,12 +1,9 @@
+import { config } from '../config';
+import { IOptions } from '../types';
 import { RequestType } from "./getTokenFromAPI";
 
-const paths = {
-  refresh: '/v1/rest/pc/refresh',
-  exchangeCodeForToken: '/v1/rest/pc/login/oauth/identity/token',
-};
-
-export const requestUrl = (type: RequestType, baseUri: string) => {
-  const path = paths[type];
+export const getRequestUrl = (type: RequestType, baseUri: string, options: IOptions) => {
+  const path = options?.authServer?.paths?.[type] || config?.authServer?.paths?.[type] || '';
   const url = `${baseUri.replace(
     /\/$/,
     ''

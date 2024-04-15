@@ -7,6 +7,10 @@ export const config: Required<IOptions> = {
     loginUri: 'https://login.userdocks.com',
     paymentUri: 'https://payment.userdocks.com',
     sdkUri: 'https://sdk.userdocks.com',
+    paths: {
+      refresh: '/v1/rest/pc/refresh',
+      exchangeCodeForToken: '/v1/rest/pc/login/oauth/identity/token',
+    },
   },
   app: {
     refreshType: 'refresh',

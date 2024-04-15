@@ -19,7 +19,7 @@ export const emptyToken: IToken = {
 export const token: IToken = {
   tokenType: 'Bearer',
   expiresIn: 1,
-  redirectUri: 'http://localhost/',
+  redirectUri: 'http://localhost',
   accessToken,
   idToken,
   refreshToken: 'xyz',
@@ -28,7 +28,7 @@ export const token: IToken = {
 export const wrongAudienceToken: IToken = {
   tokenType: 'Bearer',
   expiresIn: 1,
-  redirectUri: 'http://localhost/',
+  redirectUri: 'http://localhost',
   accessToken,
   idToken: idTokenWrongAudience,
   refreshToken: 'xyz',
@@ -37,7 +37,7 @@ export const wrongAudienceToken: IToken = {
 export const wrongIssuerToken: IToken = {
   tokenType: 'Bearer',
   expiresIn: 1,
-  redirectUri: 'http://localhost/',
+  redirectUri: 'http://localhost',
   accessToken,
   idToken: idTokenWrongIssuer,
   refreshToken: 'xyz',
@@ -46,7 +46,7 @@ export const wrongIssuerToken: IToken = {
 export const wrongNonceToken: IToken = {
   tokenType: 'Bearer',
   expiresIn: 1,
-  redirectUri: 'http://localhost/',
+  redirectUri: 'http://localhost',
   accessToken,
   idToken: idTokenWrongNonce,
   refreshToken: 'xyz',

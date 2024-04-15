@@ -17,7 +17,11 @@ beforeAll(() => {
         status: 201,
         json: () =>
           new Promise(res => {
-            res(token);
+            res({
+              items: [
+                token,
+              ],
+            });
           }),
       });
     })

@@ -3,7 +3,6 @@ import { getTokenFromAPI } from '../../src/helpers/getTokenFromAPI';
 import * as redirect from '../../src/helpers/redirectTo';
 import {
   emptyToken,
-  token,
   wrongAudienceToken,
   wrongIssuerToken,
   wrongNonceToken,
@@ -39,6 +38,7 @@ const orginalFetch = global.window.fetch;
 const fetchMock = (value: IToken) =>
   new Promise(resolve => {
     resolve({
+      status: 400,
       json: () =>
         new Promise(resolve =>
           resolve({
@@ -109,6 +109,6 @@ describe('exchangeCodeForToken', () => {
     const spy = jest.spyOn(redirect, 'redirectTo');
 
     expect(data).toEqual(emptyToken);
-    expect(spy).toHaveBeenCalledTimes(6);
+    expect(spy).toHaveBeenCalledTimes(7);
   });
 });

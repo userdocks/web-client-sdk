@@ -1,7 +1,7 @@
 export const getQueryParamsByName = jest.fn().mockImplementation(arg => {
   switch (arg) {
     case 'redirect_uri':
-      return 'http://localhost/';
+      return 'http://localhost';
     case 'client_id':
       return 'f0af4569-4d5d-4c20-af95-5a80c74e30a6';
     case 'grantType':

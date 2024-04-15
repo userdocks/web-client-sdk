@@ -102,6 +102,10 @@ export interface IOptions {
     loginUri?: string;
     paymentUri?: string;
     sdkUri?: string;
+    paths?: {
+      refresh?: string;
+      exchangeCodeForToken?: string;
+    };
   };
   app?: {
     refreshType?: TRefreshType,
