@@ -1,3 +1,9 @@
+0.12.0 - April, 15 2024
+
+* e835ef8 Feat: custom paths, new api response, rm include, ignore trailing slash (aichbauer)
+* a24aaca Docs: update build badge url (aichbauer)
+* d0396ad CI: update node versions (aichbauer)
+
 0.11.1 - February, 11 2023
 
 * 63ae71d Fix: expiresIn for store wo web worker (aichbauer)
