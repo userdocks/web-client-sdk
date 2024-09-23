@@ -1,3 +1,7 @@
+0.13.0 - September, 23 2024
+
+* eded599 Feat: new userdocks endpoints (aichbauer)
+
 0.12.0 - April, 15 2024
 
 * e835ef8 Feat: custom paths, new api response, rm include, ignore trailing slash (aichbauer)
