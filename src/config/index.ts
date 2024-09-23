@@ -8,8 +8,8 @@ export const config: Required<IOptions> = {
     paymentUri: 'https://payment.userdocks.com',
     sdkUri: 'https://sdk.userdocks.com',
     paths: {
-      refresh: '/v1/rest/pc/refresh',
-      exchangeCodeForToken: '/v1/rest/pc/login/oauth/identity/token',
+      refresh: '/api/v1/tokens',
+      exchangeCodeForToken: '/api/v1/tokens',
     },
   },
   app: {
