@@ -1,3 +1,7 @@
+0.14.0 - February, 15 2025
+
+* 9716cec Feat: remove sideeffects when unauthenticated (breaking) (JPeer264)
+
 0.13.0 - September, 23 2024
 
 * eded599 Feat: new userdocks endpoints (aichbauer)
