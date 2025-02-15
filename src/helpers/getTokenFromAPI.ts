@@ -4,7 +4,6 @@ import lang from './language';
 import { jwtDecode } from './jwtDecode';
 import { defaultToken } from './defaultToken';
 import { getOptions } from './getOptions';
-import { redirectTo } from './redirectTo';
 import { generateUuid } from './generateUuid';
 import { getRefreshToken, Session, setRefreshToken } from './getAndSetRefreshToken';
 import { getClientIdForRequest } from './getClientIdForRequest';
@@ -42,8 +41,6 @@ export const getTokenFromAPI = async (
     type === 'exchangeCodeForToken'
     && (!code || !service || !clientId)
   ) {
-    redirectTo(options, { type: 'unauthenticated' });
-
     return defaultToken;
   }
 
@@ -95,8 +92,6 @@ export const getTokenFromAPI = async (
     const isAudience = aud === cId;
 
     if (!isAudience || !isIssuedBy || !isNonce || (type === 'exchangeCodeForToken' &&  !isRedirectUri)) {
-      redirectTo(options, { type: 'unauthenticated' });
-
       return defaultToken;
     }
 
@@ -104,8 +99,6 @@ export const getTokenFromAPI = async (
 
     return dataAsToken;
   } catch (err) {
-    redirectTo(options, { type: 'unauthenticated' });
-
     return defaultToken;
   }
 };
