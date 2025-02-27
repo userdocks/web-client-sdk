@@ -18,33 +18,17 @@ export const getSession = (type: RequestType, domain: string, session: Session) 
   return s;
 };
 
-export const getRefreshTokenStore = (type: RequestType, domain: string, session: Session) => {
-  const s = getSession(type, domain, session);
-
-  if (s === '1') {
-    return sessionStorage;
-  }
-
-  return localStorage;
-}
-
-export const getRefreshToken = (type: RequestType, domain: string, session: Session) => {
+export const getRefreshToken = (domain: string) => {
   const key = `${domain}:refreshToken`;
-  const value = getRefreshTokenStore(type, domain,session).getItem(key);
+  const value = localStorage.getItem(key);
 
   return value;
 };
 
-export const refreshTokenStore = (type: RequestType, domain: string, session: Session) => {
-  return getRefreshTokenStore(type, domain, session);
-};
-
 export const setRefreshToken = (
-  type: RequestType,
   domain: string,
-  session: Session,
   refreshToken?: string
 ) => {
   const key = `${domain}:refreshToken`;
-  getRefreshTokenStore(type, domain,session).setItem(key, refreshToken || '');
+  localStorage.setItem(key, refreshToken || '');
 };

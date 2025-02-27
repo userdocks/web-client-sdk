@@ -5,7 +5,7 @@ import { jwtDecode } from './jwtDecode';
 import { defaultToken } from './defaultToken';
 import { getOptions } from './getOptions';
 import { generateUuid } from './generateUuid';
-import { getRefreshToken, Session, setRefreshToken } from './getAndSetRefreshToken';
+import { getRefreshToken, setRefreshToken } from './getAndSetRefreshToken';
 import { getClientIdForRequest } from './getClientIdForRequest';
 import { getRequestUrl } from './getRequestUrl';
 
@@ -29,10 +29,9 @@ export const getTokenFromAPI = async (
     redirectUri,
     authTime,
     scope,
-    session,
   } = queryParams;
   const cId = getClientIdForRequest(type, clientId, domain);
-  const refreshToken = getRefreshToken(type, domain, session as Session);
+  const refreshToken = getRefreshToken(domain);
 
   if (type === 'refresh' && !refreshToken) {
     return defaultToken;
@@ -95,7 +94,7 @@ export const getTokenFromAPI = async (
       return defaultToken;
     }
 
-    setRefreshToken(type, domain, session as Session, data?.refreshToken || data?.items?.[0]?.refreshToken);
+    setRefreshToken(domain, data?.refreshToken || data?.items?.[0]?.refreshToken);
 
     return dataAsToken;
   } catch (err) {

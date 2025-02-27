@@ -98,7 +98,7 @@ await userdocks.initialize(options);
   - **app** `<object>`: an object holding three key value pairs
     - **refreshType**: `<'silentRefresh' | 'refresh'>`: How to refresh your authorization tokens (_optional_)
       - *silentRefresh*: uses cookies and an iframe for refreshing the tokens (authServer is required with this option)
-      - *refresh*: uses the localStorage or sessionStorage (only for the refresh token, the access token is only stored in memory) and an HTTP request to refresh the tokens (default value)
+      - *refresh*: uses the localStorage (only for the refresh token, the access token is only stored in memory) and an HTTP request to refresh the tokens (default value)
     - **origin** `<string>`: the uri of the client application (_required_)
     - **clientId** `<string>`: the UUID of an userdocks application (_required_)
     - **redirectUri** `<string>`: the redirect uri of the userdocks application (_required_)
