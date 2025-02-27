@@ -1,3 +1,7 @@
+0.15.0 - February, 27 2025
+
+* cfc85ec Feat: mv refresh token to localstorage, rm sessionstorage (aichbauer)
+
 0.14.0 - February, 15 2025
 
 * 9716cec Feat: remove sideeffects when unauthenticated (breaking) (JPeer264)
