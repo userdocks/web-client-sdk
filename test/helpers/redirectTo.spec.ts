@@ -36,14 +36,17 @@ describe('redirectTo', () => {
       },
     });
 
-    const data = await redirectTo({
-      authServer: {},
-      app: {
-        clientId: '',
-        origin: '',
-        redirectUri: '',
+    const data = await redirectTo(
+      {
+        authServer: {},
+        app: {
+          clientId: '',
+          origin: '',
+          redirectUri: '',
+        },
       },
-    }, { type: 'signIn' });
+      { type: 'signIn' }
+    );
 
     expect(data).toBe(
       'https://login.userdocks.com?client_id=f0af4569-4d5d-4c20-af95-5a80c74e30a6&state=30e9651e-3e4d-4a67-94bc-b35edb9924be&type=signIn&redirect_uri=https://app.userdocks.com'
@@ -62,21 +65,24 @@ describe('redirectTo', () => {
       },
     });
 
-    const data = await redirectTo({
-      authServer: {},
-      app: {
-        clientId: '',
-        origin: '',
-        redirectUri: '',
+    const data = await redirectTo(
+      {
+        authServer: {},
+        app: {
+          clientId: '',
+          origin: '',
+          redirectUri: '',
+        },
       },
-    }, {
-      type: 'payment',
-      payment: {
-        sessionId: '1',
-        state: '2',
-        hash: '3',
-      },
-    });
+      {
+        type: 'payment',
+        payment: {
+          sessionId: '1',
+          state: '2',
+          hash: '3',
+        },
+      }
+    );
 
     expect(data).toBe(
       'https://payment.userdocks.com?client_id=f0af4569-4d5d-4c20-af95-5a80c74e30a6&state=2&type=payment&session_id=1&hash=3'

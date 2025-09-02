@@ -1,13 +1,17 @@
-import { RequestType } from "./getTokenFromAPI";
+import { RequestType } from './getTokenFromAPI';
 
 export type Session = '1' | '0';
 
-export const getSession = (type: RequestType, domain: string, session: Session) => {
+export const getSession = (
+  type: RequestType,
+  domain: string,
+  session: Session
+) => {
   let s;
 
-  switch(type) {
+  switch (type) {
     case 'refresh':
-      s = localStorage.getItem(`${domain}:session`) as Session || session;
+      s = (localStorage.getItem(`${domain}:session`) as Session) || session;
       break;
     case 'exchangeCodeForToken':
     default:
@@ -25,10 +29,7 @@ export const getRefreshToken = (domain: string) => {
   return value;
 };
 
-export const setRefreshToken = (
-  domain: string,
-  refreshToken?: string
-) => {
+export const setRefreshToken = (domain: string, refreshToken?: string) => {
   const key = `${domain}:refreshToken`;
   localStorage.setItem(key, refreshToken || '');
 };

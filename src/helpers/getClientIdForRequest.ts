@@ -1,9 +1,9 @@
-import { RequestType } from "./getTokenFromAPI";
+import { RequestType } from './getTokenFromAPI';
 
 export const getClientIdForRequest = (
   type: RequestType,
   clientId?: string,
-  domain?: string,
+  domain?: string
 ) => {
   let cId = clientId;
 

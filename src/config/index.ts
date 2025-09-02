@@ -1,4 +1,4 @@
-import { IOptions } from "../types";
+import { IOptions } from '../types';
 
 export const config: Required<IOptions> = {
   authServer: {

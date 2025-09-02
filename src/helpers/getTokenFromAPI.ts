@@ -15,7 +15,12 @@ export const getTokenFromAPI = async (
   type: 'exchangeCodeForToken' | 'refresh',
   options: IOptions
 ) => {
-  const { baseUri, domain, issuer, redirectUri: optionsRedirectUri } = getOptions(options);
+  const {
+    baseUri,
+    domain,
+    issuer,
+    redirectUri: optionsRedirectUri,
+  } = getOptions(options);
   const queryParams = getQueryParams();
   const savedNonce = generateUuid();
   const url = getRequestUrl(type, baseUri, options);
@@ -36,10 +41,7 @@ export const getTokenFromAPI = async (
   if (type === 'refresh' && !refreshToken) {
     return defaultToken;
   }
-  if (
-    type === 'exchangeCodeForToken'
-    && (!code || !service || !clientId)
-  ) {
+  if (type === 'exchangeCodeForToken' && (!code || !service || !clientId)) {
     return defaultToken;
   }
 
@@ -62,39 +64,51 @@ export const getTokenFromAPI = async (
         nonce: savedNonce,
         auth_time: authTime,
         scope,
-        ...(type === 'refresh' ? {
-          prompt: 'none',
-          refresh_token: refreshToken,
-        } : {})
+        ...(type === 'refresh'
+          ? {
+              prompt: 'none',
+              refresh_token: refreshToken,
+            }
+          : {}),
       }),
     });
 
     const data = await res.json();
     const dataAsToken: IToken = {
-      accessToken: data?.accessToken || data?.items?.[0]?.accessToken,
-      idToken: data?.idToken || data?.items?.[0]?.idToken,
-      expiresIn: data?.expiresIn || data?.items?.[0]?.expiresIn,
-      tokenType: data?.tokenType || data?.items?.[0]?.tokenType,
-      redirectUri: data?.redirectUri || data?.items?.[0]?.redirectUri,
-      refreshToken: data?.refreshToken  || data?.items?.[0]?.refreshToken,
+      accessToken: data?.accessToken || data?.items?.[0]?.accessToken,
+      idToken: data?.idToken || data?.items?.[0]?.idToken,
+      expiresIn: data?.expiresIn || data?.items?.[0]?.expiresIn,
+      tokenType: data?.tokenType || data?.items?.[0]?.tokenType,
+      redirectUri: data?.redirectUri || data?.items?.[0]?.redirectUri,
+      refreshToken: data?.refreshToken || data?.items?.[0]?.refreshToken,
     };
 
     const token = jwtDecode(dataAsToken?.idToken, 'id');
     const { iss, nonce, aud } = token.payload.id as IIdTokenPayload;
     let newRedirectUri = `${window.location.origin}${window.location.pathname}`;
     // ignore trailing slash
-    newRedirectUri = newRedirectUri.endsWith('/') ? newRedirectUri.slice(0, -1) : `${newRedirectUri}`;
+    newRedirectUri = newRedirectUri.endsWith('/')
+      ? newRedirectUri.slice(0, -1)
+      : `${newRedirectUri}`;
 
     const isNonce = savedNonce === nonce;
     const isIssuedBy = issuer === iss;
     const isRedirectUri = dataAsToken?.redirectUri === newRedirectUri;
     const isAudience = aud === cId;
 
-    if (!isAudience || !isIssuedBy || !isNonce || (type === 'exchangeCodeForToken' &&  !isRedirectUri)) {
+    if (
+      !isAudience ||
+      !isIssuedBy ||
+      !isNonce ||
+      (type === 'exchangeCodeForToken' && !isRedirectUri)
+    ) {
       return defaultToken;
     }
 
-    setRefreshToken(domain, data?.refreshToken || data?.items?.[0]?.refreshToken);
+    setRefreshToken(
+      domain,
+      data?.refreshToken || data?.items?.[0]?.refreshToken
+    );
 
     return dataAsToken;
   } catch (err) {

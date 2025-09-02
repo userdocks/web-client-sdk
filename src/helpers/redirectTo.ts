@@ -2,17 +2,23 @@ import { generateUuid } from './generateUuid';
 import { getOptions } from './getOptions';
 import { IOptions, IRedirectOptions } from '../types';
 
-export const redirectTo = (options: IOptions, redirectOptions: IRedirectOptions) => {
-  const  { type, payment } = redirectOptions;
+export const redirectTo = (
+  options: IOptions,
+  redirectOptions: IRedirectOptions
+) => {
+  const { type, payment } = redirectOptions;
   const state = generateUuid();
   const nonce = generateUuid();
-  const { redirectUri, loginUri, paymentUri, audience, domain } = getOptions(options);
+  const { redirectUri, loginUri, paymentUri, audience, domain } =
+    getOptions(options);
   const uri = type === 'payment' ? paymentUri : loginUri;
-  const unauthenticatedParameter = type === 'unauthenticated' ? `&${type}=true` : '';
+  const unauthenticatedParameter =
+    type === 'unauthenticated' ? `&${type}=true` : '';
   const logoutParameter = type === 'logout' ? `&${type}=true` : '';
-  const queryParameter = type === 'payment'
-    ? `client_id=${audience}&state=${payment?.state}&type=${type}&session_id=${payment?.sessionId}&hash=${payment?.hash}`
-    : `client_id=${audience}&state=${state}&type=${type}&redirect_uri=${redirectUri}${unauthenticatedParameter}${logoutParameter}`;
+  const queryParameter =
+    type === 'payment'
+      ? `client_id=${audience}&state=${payment?.state}&type=${type}&session_id=${payment?.sessionId}&hash=${payment?.hash}`
+      : `client_id=${audience}&state=${state}&type=${type}&redirect_uri=${redirectUri}${unauthenticatedParameter}${logoutParameter}`;
 
   localStorage.setItem(`${domain}:${audience}:state`, state);
   localStorage.setItem(`${domain}:${audience}:type`, type);

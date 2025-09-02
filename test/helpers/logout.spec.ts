@@ -38,7 +38,7 @@ describe('logout', () => {
       app: {
         ...config.app,
         refreshType: 'silentRefresh',
-      }
+      },
     });
 
     expect(window.addEventListener).toBeCalledTimes(1);

@@ -4,12 +4,7 @@ import { ILogout, IOptions } from '../types';
 import { getOptions } from './getOptions';
 
 export const logout = (options: IOptions): Promise<ILogout> => {
-  const {
-    redirectUri,
-    domain,
-    loginUri,
-    refreshType,
-  } = getOptions(options);
+  const { redirectUri, domain, loginUri, refreshType } = getOptions(options);
   const clientId =
     localStorage.getItem(`${domain}:clientId`) ||
     options.app?.clientId ||

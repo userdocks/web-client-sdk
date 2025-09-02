@@ -18,9 +18,7 @@ beforeAll(() => {
         json: () =>
           new Promise(res => {
             res({
-              items: [
-                token,
-              ],
+              items: [token],
             });
           }),
       });

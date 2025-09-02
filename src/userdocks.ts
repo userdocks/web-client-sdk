@@ -21,7 +21,7 @@ let globalPromise: Promise<Boolean>;
 let renewPromise = true;
 let options: IOptions;
 
-const isInitialized = () => !!version
+const isInitialized = () => !!version;
 
 const warn = () => {
   if (!isInitialized()) {
@@ -32,9 +32,8 @@ const warn = () => {
   }
 };
 
-
 const userdocks = {
-  initialize: async (userdocksOptions?: IOptions, ) => {
+  initialize: async (userdocksOptions?: IOptions) => {
     options = userdocksOptions || config;
 
     if (version) {
@@ -104,9 +103,8 @@ const userdocks = {
 
         const { refreshType } = getOptions(options);
 
-        const refreshFunc = refreshType === 'refresh'
-          ? this.refresh
-          : this.silentRefresh;
+        const refreshFunc =
+          refreshType === 'refresh' ? this.refresh : this.silentRefresh;
 
         globalPromise = new Promise(resolve => {
           refreshFunc()
@@ -142,7 +140,7 @@ const userdocks = {
       }
 
       return true;
-    } catch(err) {
+    } catch (err) {
       console.error(
         'A request for a refresh failed. Make sure that all properties of the config object are correct.'
       );
