@@ -1,3 +1,10 @@
+0.16.0 - September, 02 2025
+
+* 639e7c5 Fix: return correct language when navigator has `de` already in it (Jan Peer Stöcklmair)
+* 0914caf Feat: add subject to redirectTo (Jan Peer Stöcklmair)
+* 39f7473 Style: apply prettier styles (Jan Peer Stöcklmair)
+* 25331c1 Fix: only warn when it is NOT initialized (Jan Peer Stöcklmair)
+
 0.15.0 - February, 27 2025
 
 * cfc85ec Feat: mv refresh token to localstorage, rm sessionstorage (aichbauer)
