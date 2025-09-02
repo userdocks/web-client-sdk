@@ -4,7 +4,7 @@ export const splittedLocationPathname = () =>
 export const hasLanguage = () => {
   const split = splittedLocationPathname();
   return Array.isArray(split) && split.length > 0
-    ? split[0] === 'en' || split[0] === 'de'
+    ? split[0].startsWith('en') || split[0].startsWith('de')
     : false;
 };
 
