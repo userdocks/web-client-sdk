@@ -26,6 +26,13 @@ export interface ISilentRefreshData {
   token: IToken | null;
 }
 
+export type TRedirectType =
+  | 'signIn'
+  | 'signUp'
+  | 'payment'
+  | 'logout'
+  | 'unauthenticated';
+
 export interface IAccessTokenPayload {
   iss: string;
   sub: string;
@@ -121,6 +128,7 @@ export interface IRedirectOptions {
     hash?: string;
     state?: string;
   };
+  sub?: string;
   type: TRedirectType;
 }
 
@@ -223,12 +231,5 @@ export interface Tenant {
   stripeProductId: unknown;
   users: User[];
 }
-
-export type TRedirectType =
-  | 'signIn'
-  | 'signUp'
-  | 'payment'
-  | 'logout'
-  | 'unauthenticated';
 
 export type TUserdocks = typeof userdocks;

@@ -6,12 +6,13 @@ export const redirectTo = (
   options: IOptions,
   redirectOptions: IRedirectOptions
 ) => {
-  const { type, payment } = redirectOptions;
+  const { type, payment, sub } = redirectOptions;
   const state = generateUuid();
   const nonce = generateUuid();
   const { redirectUri, loginUri, paymentUri, audience, domain } =
     getOptions(options);
   const uri = type === 'payment' ? paymentUri : loginUri;
+  const additionalSub = sub ? `&sub=${sub}` : '';
   const unauthenticatedParameter =
     type === 'unauthenticated' ? `&${type}=true` : '';
   const logoutParameter = type === 'logout' ? `&${type}=true` : '';
@@ -25,7 +26,7 @@ export const redirectTo = (
   localStorage.setItem(`${domain}:clientId`, audience);
   localStorage.setItem(`${domain}:${audience}:nonce`, nonce);
 
-  const url = `${uri}?${queryParameter}`;
+  const url = `${uri}?${queryParameter}${additionalSub}`;
   window.location.href = url;
 
   return url;
