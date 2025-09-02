@@ -24,7 +24,7 @@ let options: IOptions;
 const isInitialized = () => !!version
 
 const warn = () => {
-  if (isInitialized()) {
+  if (!isInitialized()) {
     console.warn(
       // todo jpeer: add docs how to initialize userdocks web sdk
       'Userdocks: Make sure to initialize userdocks before you use the method'
